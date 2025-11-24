@@ -10,6 +10,25 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: FutureBuilder(
+            future: logic.getAudioFiles(),
+            builder: (context, snapshot) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Caricamento file dal dispositivo in corso..."),
+                  SizedBox(height: 20),
+                  LinearProgressIndicator(),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
+    );
   }
 }
