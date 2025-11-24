@@ -1,16 +1,28 @@
-# one_music
+# One Music
 
-A new Flutter project.
+**One Music** is a lightweight and user-friendly application designed to play audio files stored on your device. With support for `.mp3` and other common audio formats, it provides a seamless listening experience without the need for an internet connection.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **Play Local Files:** Easily browse and play audio files stored on your device.
+- **Intuitive Interface:** Clean and simple design for quick navigation.
+- **Playlist Support:** Create and manage custom playlists.
+- **Playback Controls:** Play, pause, skip, repeat, and shuffle your music.
+- **Background Playback:** Listen to your favorite songs while using other apps.
+- **Fast Scanning:** Quickly detect and display all supported audio files on your device.
 
-A few resources to get you started if this is your first Flutter project:
+## Benefits
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **No Internet Required:** Perfect for offline listening.
+- **Organize Your Music:** Keep your audio library neatly arranged.
+- **Lightweight & Efficient:** Minimal system resource usage, optimized for smooth performance.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Supported Formats
+
+- MP3 (.mp3)
+- WAV (.wav)
+- AAC (.aac)
+- Other common audio formats
+
+
+Enjoy your music anytime, anywhere with **One Music**!  
