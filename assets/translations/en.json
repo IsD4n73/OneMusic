@@ -2,6 +2,22 @@
   "permission_denied": "",
   "permission_denied_desc": "",
   "file_loading_device":  "",
+  "settings_title": "",
+  "playlist_title": "",
+  "songs_title": "",
+  "your": "",
+  "songs": "",
+  "playlists": "",
+  "": "",
+  "": "",
+  "": "",
+  "": "",
+  "": "",
+  "": "",
+  "": "",
+  "": "",
+  "": "",
+  "": "",
   "msg":"{} are written in the {} language"
 
 }

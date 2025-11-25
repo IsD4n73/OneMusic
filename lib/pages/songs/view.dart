@@ -1,14 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
+import 'package:one_music/pages/widgets/one_app_bar.dart';
 
-import '../widgets/one_app_bar.dart';
 import 'logic.dart';
 
-class PlaylistPage extends StatelessWidget {
-  PlaylistPage({Key? key}) : super(key: key);
+class SongsPage extends StatelessWidget {
+  SongsPage({super.key});
 
-  final PlaylistLogic logic = Get.put(PlaylistLogic());
+  final SongsLogic logic = Get.put(SongsLogic());
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class PlaylistPage extends StatelessWidget {
       children: [
         OneAppBar(
           textOne: "your".tr(),
-          textTwo: "playlists".tr(),
+          textTwo: "songs".tr(),
           rightIcon: Icons.search,
           onTap: () {},
         ),

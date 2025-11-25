@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../widgets/one_app_bar.dart';
 import 'logic.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -10,6 +11,6 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Column(children: [OneAppBar()]);
   }
 }
