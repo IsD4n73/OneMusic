@@ -1,5 +1,6 @@
 import 'package:audio_metadata_reader/audio_metadata_reader.dart';
 import 'package:flutter/material.dart';
+import 'package:mini_music_visualizer/mini_music_visualizer.dart';
 import 'package:one_music/common/formatter.dart';
 import 'package:one_music/models/one_song.dart';
 import 'package:one_music/theme/theme_extensions.dart';
@@ -8,12 +9,14 @@ class SongTile extends StatelessWidget {
   final OneSong song;
   final void Function() onTap;
   final bool isPlaying;
+  final bool isSelected;
 
   const SongTile({
     super.key,
     required this.song,
     required this.onTap,
     required this.isPlaying,
+    required this.isSelected,
   });
 
   @override
@@ -51,10 +54,19 @@ class SongTile extends StatelessWidget {
               ),
             ),
             Spacer(),
+            isSelected
+                ? MiniMusicVisualizer(
+                    color: context.colorScheme.primary,
+                    width: 3,
+                    animate: isPlaying,
+                    height: 15,
+                  )
+                : SizedBox.shrink(),
+            SizedBox(width: 5),
             Text(
               Formatter.formatDuration(song.data.duration ?? Duration.zero),
               style: TextStyle(
-                fontSize: 11,
+                fontSize: 10,
                 color: context.colorScheme.primary,
               ),
             ),
