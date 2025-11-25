@@ -21,7 +21,7 @@ class SongsLogic extends GetxController {
     Map<String, dynamic> pictureLit = jsonDecode(jsonPicture);
     var songList = jsonMeta.map((e) => Converter.fromJson(e)).toList();
 
-    songs.value = songList
+    var tempList = songList
         .map(
           (song) => OneSong(
             song,
@@ -29,5 +29,13 @@ class SongsLogic extends GetxController {
           ),
         )
         .toList();
+
+    tempList.sort(
+      (a, b) => (a.data.title ?? "").toLowerCase().compareTo(
+        (b.data.title ?? "").toLowerCase(),
+      ),
+    );
+
+    songs.value = tempList;
   }
 }
