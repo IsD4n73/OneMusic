@@ -18,6 +18,8 @@ class SplashPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image.asset("assets/images/icon.png"),
+              SizedBox(height: 20),
               Text("file_loading_device".tr()),
               SizedBox(height: 20),
               LinearProgressIndicator(),

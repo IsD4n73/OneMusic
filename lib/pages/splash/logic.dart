@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get.dart';
@@ -69,7 +70,10 @@ class SplashLogic extends GetxController {
 
     final List<String> audioFiles = [];
     var cleaned = await DbController.songsBox.clear();
+    await DbController.picturesBox.clear();
     Get.log('Songs Cleaned: $cleaned');
+
+    Map<String, dynamic> pictures = {};
 
     await for (final entity in dir.list(recursive: false, followLinks: false)) {
       if (entity is File) {
@@ -77,7 +81,8 @@ class SplashLogic extends GetxController {
 
         if (audioExtensions.any((e) => ext.endsWith(e))) {
           try {
-            var meta = readMetadata(entity);
+            var meta = readMetadata(entity, getImage: true);
+            pictures[meta.file.path] = meta.pictures.first.bytes;
             var metaJson = Converter.toJson(meta);
             await DbController.songsBox.add(metaJson);
             audioFiles.add(entity.path);
@@ -87,8 +92,10 @@ class SplashLogic extends GetxController {
         }
       }
     }
+
+    await DbController.picturesBox.add(jsonEncode(pictures));
     Get.log('Audio Files Found: ${audioFiles.length}');
-    Get.off(HomePage());
+    Get.off(() => HomePage());
     return audioFiles;
   }
 

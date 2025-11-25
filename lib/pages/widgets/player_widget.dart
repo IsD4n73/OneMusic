@@ -1,5 +1,6 @@
 import 'package:audio_metadata_reader/audio_metadata_reader.dart';
 import 'package:flutter/material.dart';
+import 'package:one_music/models/one_song.dart';
 import 'package:one_music/theme/theme_extensions.dart';
 
 class PlayerWidget extends StatelessWidget {
@@ -7,7 +8,7 @@ class PlayerWidget extends StatelessWidget {
   final void Function()? onPlay;
   final void Function()? onRight;
   final void Function()? onTapCard;
-  final AudioMetadata song;
+  final OneSong song;
   const PlayerWidget({
     super.key,
     this.onLeft,
@@ -33,13 +34,28 @@ class PlayerWidget extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(Icons.abc),
+              song.picture != null
+                  ? Image.memory(
+                      song.picture!,
+                      width: 50,
+                      height: 50,
+                      errorBuilder: (context, error, stackTrace) => Image.asset(
+                        "assets/images/icon.png",
+                        width: 50,
+                        height: 50,
+                      ),
+                    )
+                  : Image.asset(
+                      "assets/images/icon.png",
+                      width: 50,
+                      height: 50,
+                    ),
               SizedBox(width: 5),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(song.title ?? song.file.path.split("/").last),
-                  Text(song.artist ?? "", style: TextStyle(fontSize: 13)),
+                  Text(song.data.title ?? song.data.file.path.split("/").last),
+                  Text(song.data.artist ?? "", style: TextStyle(fontSize: 13)),
                 ],
               ),
               Spacer(),
