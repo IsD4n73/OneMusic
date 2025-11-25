@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
+import 'package:easy_localization/easy_localization.dart';
 
 import 'logic.dart';
 
@@ -14,18 +15,13 @@ class SplashPage extends StatelessWidget {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(8),
-          child: FutureBuilder(
-            future: logic.getAudioFiles(),
-            builder: (context, snapshot) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Caricamento file dal dispositivo in corso..."),
-                  SizedBox(height: 20),
-                  LinearProgressIndicator(),
-                ],
-              );
-            },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("file_loading_device".tr()),
+              SizedBox(height: 20),
+              LinearProgressIndicator(),
+            ],
           ),
         ),
       ),

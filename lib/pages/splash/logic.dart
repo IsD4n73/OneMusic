@@ -1,25 +1,43 @@
 import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get.dart';
+import 'package:one_music/common/app_toast.dart';
+import 'package:one_music/common/db_controller.dart';
+import 'package:one_music/pages/home/view.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ffi/ffi.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:win32/win32.dart';
 
 class SplashLogic extends GetxController {
   var audioExtensions = ['.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a'];
 
-  Future<Directory> _getMusicDirectory() async {
+  Future<Directory?> _getMusicDirectory() async {
+    // ANDROID
     if (Platform.isAndroid) {
-      // ANDROID
-      final dirs = await getExternalStorageDirectories(
-        type: StorageDirectory.music,
-      );
-      if (dirs != null && dirs.isNotEmpty) return dirs.first;
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
 
-      return await getApplicationDocumentsDirectory();
+      var permissionGranted = false;
+      if (androidInfo.version.sdkInt < 22) {
+        var status = await Permission.storage.request();
+        permissionGranted = status.isGranted;
+      } else {
+        // Android 13+ (audio)
+        var status = await Permission.audio.request();
+        permissionGranted = status.isGranted;
+      }
+
+      if (!permissionGranted) {
+        AppToast.showErrorToast("permission_denied", "permission_denied_desc");
+        return null;
+      }
+
+      return Directory('/storage/emulated/0/Music');
     }
 
+    // WINDOWS
     if (Platform.isWindows) {
-      // WINDOWS
       final pathPtr = wsalloc(MAX_PATH);
 
       final hr = SHGetFolderPath(NULL, CSIDL_MYMUSIC, NULL, NULL, pathPtr);
@@ -35,27 +53,40 @@ class SplashLogic extends GetxController {
       return Directory(path);
     }
 
-    // fallback per altre piattaforme
+    // fallback
     return await getApplicationDocumentsDirectory();
   }
 
-  Future<List<File>> getAudioFiles() async {
+  Future<List<String>> getAudioFiles() async {
     var dir = await _getMusicDirectory();
+    if (dir == null) return [];
+
+    Get.log('Music Dir: ${dir.path}');
 
     if (!await dir.exists()) return [];
 
-    final List<File> audioFiles = [];
+    final List<String> audioFiles = [];
 
     await for (final entity in dir.list(recursive: false, followLinks: false)) {
       if (entity is File) {
         final ext = entity.path.toLowerCase();
 
         if (audioExtensions.any((e) => ext.endsWith(e))) {
-          audioFiles.add(entity);
+          audioFiles.add(entity.path);
         }
       }
     }
+    Get.log('Audio Files Found: ${audioFiles.length}');
 
+    await DbController.songsBox.addAll(audioFiles);
+
+    Get.off(HomePage);
     return audioFiles;
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getAudioFiles();
   }
 }

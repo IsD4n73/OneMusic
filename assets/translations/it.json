@@ -1,4 +1,7 @@
 {
+  "permission_denied": "",
+  "permission_denied_desc": "",
+  "file_loading_device":  "",
   "msg":"{} are written in the {} language"
 
 }
