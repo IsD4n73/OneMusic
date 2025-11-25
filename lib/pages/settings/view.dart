@@ -33,10 +33,12 @@ class SettingsPage extends StatelessWidget {
               shrinkWrap: true,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
               ),
               children: [
                 SettingsCard(
-                  icon: Icon(Icons.abc),
+                  icon: Text("🇮🇹", style: TextStyle(fontSize: 40)),
                   text: "Italiano",
                   selected: context.locale.languageCode == "it",
                   onTap: () {
@@ -44,7 +46,7 @@ class SettingsPage extends StatelessWidget {
                   },
                 ),
                 SettingsCard(
-                  icon: Icon(Icons.abc),
+                  icon: Text("🇺🇸", style: TextStyle(fontSize: 40)),
                   text: "English",
                   selected: context.locale.languageCode == "en",
                   onTap: () {

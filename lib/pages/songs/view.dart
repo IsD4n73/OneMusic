@@ -26,36 +26,46 @@ class SongsPage extends StatelessWidget {
         Expanded(
           child: Stack(
             children: [
-              SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Obx(
-                      () => ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: logic.songs.length,
-                        itemBuilder: (context, index) => Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SongTile(
-                              song: logic.songs[index],
-                              isSelected:
-                                  logic.songs[index].data.file.path ==
-                                  logic.playingSong.value?.data.file.path,
-                              onTap: () {},
-                              isPlaying: false,
-                            ),
-                            index == (logic.songs.length - 1) &&
-                                    logic.playingSong.value != null
-                                ? SizedBox(height: 70)
-                                : SizedBox.shrink(),
-                          ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Obx(
+                          () => Text("${logic.songs.length} ${"track".tr()}"),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                  ],
+                      Obx(
+                        () => ListView.builder(
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: logic.songs.length,
+                          itemBuilder: (context, index) => Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SongTile(
+                                song: logic.songs[index],
+                                isSelected:
+                                    logic.songs[index].data.file.path ==
+                                    logic.playingSong.value?.data.file.path,
+                                onTap: () {},
+                                isPlaying: false,
+                              ),
+                              index == (logic.songs.length - 1) &&
+                                      logic.playingSong.value != null
+                                  ? SizedBox(height: 70)
+                                  : SizedBox.shrink(),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                    ],
+                  ),
                 ),
               ),
               Obx(
