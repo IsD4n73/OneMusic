@@ -25,14 +25,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.13.0"
-  audio_meta:
+  audio_metadata_reader:
     dependency: "direct main"
     description:
-      name: audio_meta
-      sha256: "2d8c926d5670d6cf61d7935e11d696b3aaba058a57f9d7aac447aed24d900a1c"
+      name: audio_metadata_reader
+      sha256: b7cecf78178075c8f8281ae184ae81d137eb6e751f5d193334984eb732662ee0
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.1"
+    version: "1.4.2"
   audio_session:
     dependency: transitive
     description:
@@ -57,6 +57,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  charset:
+    dependency: transitive
+    description:
+      name: charset
+      sha256: "27802032a581e01ac565904ece8c8962564b1070690794f0072f6865958ce8b9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   clock:
     dependency: transitive
     description:
@@ -365,6 +373,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.16.0"
+  mime:
+    dependency: transitive
+    description:
+      name: mime
+      sha256: "41a20518f0cb1256669420fdba0cd90d21561e560ac240f26ef8322e45bb7ed6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   mini_music_visualizer:
     dependency: "direct main"
     description:

@@ -2,12 +2,14 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get.dart';
 import 'package:one_music/common/app_toast.dart';
+import 'package:one_music/common/converter.dart';
 import 'package:one_music/common/db_controller.dart';
 import 'package:one_music/pages/home/view.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ffi/ffi.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:win32/win32.dart';
+import 'package:audio_metadata_reader/audio_metadata_reader.dart';
 
 class SplashLogic extends GetxController {
   var audioExtensions = ['.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a'];
@@ -66,21 +68,27 @@ class SplashLogic extends GetxController {
     if (!await dir.exists()) return [];
 
     final List<String> audioFiles = [];
+    var cleaned = await DbController.songsBox.clear();
+    Get.log('Songs Cleaned: $cleaned');
 
     await for (final entity in dir.list(recursive: false, followLinks: false)) {
       if (entity is File) {
         final ext = entity.path.toLowerCase();
 
         if (audioExtensions.any((e) => ext.endsWith(e))) {
-          audioFiles.add(entity.path);
+          try {
+            var meta = readMetadata(entity);
+            var metaJson = Converter.toJson(meta);
+            await DbController.songsBox.add(metaJson);
+            audioFiles.add(entity.path);
+          } catch (e) {
+            Get.log('Error reading metadata: $e');
+          }
         }
       }
     }
     Get.log('Audio Files Found: ${audioFiles.length}');
-
-    await DbController.songsBox.addAll(audioFiles);
-
-    Get.off(HomePage);
+    Get.off(HomePage());
     return audioFiles;
   }
 

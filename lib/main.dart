@@ -1,3 +1,5 @@
+import 'package:audio_metadata_reader/audio_metadata_reader.dart'
+    show AudioMetadata;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_ce/hive.dart';
