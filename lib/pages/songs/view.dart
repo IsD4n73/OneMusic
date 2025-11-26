@@ -1,4 +1,3 @@
-import 'package:audio_metadata_reader/audio_metadata_reader.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -53,8 +52,8 @@ class SongsPage extends StatelessWidget {
                                     SongTile(
                                       song: logic.songs[index],
                                       isSelected:
-                                          logic.songs[index].file.path ==
-                                          logic.playingSong.value?.file.path,
+                                          logic.songs[index].file ==
+                                          logic.playingSong.value?.file,
                                       onTap: () {},
                                       isPlaying: false,
                                     ),

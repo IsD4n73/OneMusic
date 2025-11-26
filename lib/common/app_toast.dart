@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class AppToast {
-  static void showErrorToast(String title, String text) {
+  static void showToast(String title, String text, {String style = "error"}) {
     toastification.show(
       context: Get.context,
-      type: ToastificationType.error,
+      type: ToastificationType.defaultValues.firstWhere(
+        (element) => element.name == style,
+      ),
       style: ToastificationStyle.flatColored,
       title: Text(title.tr()),
       description: Text(text.tr()),

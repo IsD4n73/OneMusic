@@ -1,18 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart' hide Trans;
 import 'package:one_music/pages/settings/view.dart';
 import 'package:one_music/pages/songs/view.dart';
 import 'package:one_music/theme/theme_extensions.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 import '../playlist/view.dart';
-import 'logic.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
-
-  final HomeLogic logic = Get.put(HomeLogic());
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {

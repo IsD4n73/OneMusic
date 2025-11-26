@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -22,30 +24,91 @@ class PlaylistPage extends StatelessWidget {
           onTap: () {},
         ),
         SizedBox(height: 10),
-        Card(
-          margin: EdgeInsets.all(10),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(20),
-            onTap: () {},
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.playlist_add),
-                  SizedBox(width: 10),
-                  Text("create_playlist".tr()),
-                ],
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              Card(
+                margin: EdgeInsets.all(10),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(20),
+                  onTap: () {
+                    logic.addPlaylist();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.playlist_add),
+                        SizedBox(width: 10),
+                        Text("create_playlist".tr()),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-            ),
+              Divider(),
+              Obx(
+                () => logic.playlists.isEmpty
+                    ? OneErrorWidget(error: "no_playlists_found")
+                    : GridView.builder(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: logic.playlists.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 5,
+                          mainAxisSpacing: 5,
+                        ),
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            borderRadius: BorderRadius.circular(20),
+                            onTap: () {},
+                            child: Card(
+                              child: Column(
+                                children: [
+                                  logic.playlists[index].picture != null
+                                      ? Image.memory(
+                                          base64Decode(
+                                            logic.playlists[index].picture!,
+                                          ),
+                                          width: 150,
+                                          height: 150,
+                                          errorBuilder:
+                                              (context, error, stackTrace) =>
+                                                  Image.asset(
+                                                    "assets/images/icon.png",
+                                                    width: 50,
+                                                    height: 50,
+                                                  ),
+                                        )
+                                      : Image.asset(
+                                          "assets/images/icon.png",
+                                          width: 50,
+                                          height: 50,
+                                        ),
+                                  Text(
+                                    logic.playlists[index].name,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  Text(
+                                    "${logic.playlists[index].songs.length} ${"track".tr()}",
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+              ),
+            ],
           ),
-        ),
-        Divider(),
-        Obx(
-          () => logic.playlists.isEmpty
-              ? OneErrorWidget(error: "no_playlists_found")
-              : SizedBox.shrink(),
         ),
       ],
     );

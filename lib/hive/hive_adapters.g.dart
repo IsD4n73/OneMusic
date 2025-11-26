@@ -28,7 +28,7 @@ class OneSongAdapter extends TypeAdapter<OneSong> {
       discNumber: (fields[8] as num).toInt(),
       totalDisc: (fields[9] as num).toInt(),
       lyrics: fields[10] as String,
-      file: fields[11] as File,
+      file: fields[11] as String,
       picture: fields[12] as String?,
     );
   }

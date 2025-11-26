@@ -1,9 +1,4 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
-import 'package:audio_metadata_reader/audio_metadata_reader.dart';
 import 'package:get/get.dart';
-import 'package:one_music/common/converter.dart';
 import 'package:one_music/common/db_controller.dart';
 
 import '../../models/one_song.dart';
@@ -15,27 +10,7 @@ class SongsLogic extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    var jsonMeta = DbController.songsBox.values.toList();
-    var jsonPicture = DbController.picturesBox.values.first;
 
-    Map<String, dynamic> pictureLit = jsonDecode(jsonPicture);
-    var songList = jsonMeta.map((e) => Converter.fromJson(e)).toList();
-
-    /*var tempList = songList
-        .map(
-          (song) => OneSong(
-            song,
-            Uint8List.fromList(List<int>.from(pictureLit[song.file.path])),
-          ),
-        )
-        .toList();
-
-    tempList.sort(
-      (a, b) => (a.data.title ?? "").toLowerCase().compareTo(
-        (b.data.title ?? "").toLowerCase(),
-      ),
-    );
-
-    songs.value = tempList;*/
+    songs.value = List<OneSong>.from(DbController.songsBox.values);
   }
 }

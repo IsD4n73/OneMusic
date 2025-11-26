@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
+import 'package:one_music/common/app_toast.dart';
 import 'package:one_music/pages/settings/settings_card.dart';
 import 'package:one_music/pages/settings/settings_tile.dart';
 
@@ -8,7 +9,7 @@ import '../widgets/one_app_bar.dart';
 import 'logic.dart';
 
 class SettingsPage extends StatelessWidget {
-  SettingsPage({Key? key}) : super(key: key);
+  SettingsPage({super.key});
 
   final SettingsLogic logic = Get.put(SettingsLogic());
 
@@ -43,6 +44,11 @@ class SettingsPage extends StatelessWidget {
                   selected: context.locale.languageCode == "it",
                   onTap: () {
                     context.setLocale(Locale("it"));
+                    AppToast.showToast(
+                      "restart_app",
+                      "languace_changed_info",
+                      style: "info",
+                    );
                   },
                 ),
                 SettingsCard(
@@ -51,6 +57,11 @@ class SettingsPage extends StatelessWidget {
                   selected: context.locale.languageCode == "en",
                   onTap: () {
                     context.setLocale(Locale("en"));
+                    AppToast.showToast(
+                      "restart_app",
+                      "languace_changed_info",
+                      style: "info",
+                    );
                   },
                 ),
               ],

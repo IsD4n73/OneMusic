@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 class OneSong {
   final String album;
   final int year;
@@ -13,7 +10,7 @@ class OneSong {
   final int discNumber;
   final int totalDisc;
   final String lyrics;
-  final File file;
+  final String file;
   final String? picture;
 
   OneSong({

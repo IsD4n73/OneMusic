@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get.dart';
 import 'package:one_music/common/app_toast.dart';
-import 'package:one_music/common/converter.dart';
 import 'package:one_music/common/db_controller.dart';
+import 'package:one_music/models/one_song.dart';
 import 'package:one_music/pages/home/view.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ffi/ffi.dart';
@@ -32,7 +32,7 @@ class SplashLogic extends GetxController {
       }
 
       if (!permissionGranted) {
-        AppToast.showErrorToast("permission_denied", "permission_denied_desc");
+        AppToast.showToast("permission_denied", "permission_denied_desc");
         return null;
       }
 
@@ -60,7 +60,7 @@ class SplashLogic extends GetxController {
     return await getApplicationDocumentsDirectory();
   }
 
-  Future<List<String>> getAudioFiles() async {
+  Future<List<OneSong>> getAudioFiles() async {
     var dir = await _getMusicDirectory();
     if (dir == null) return [];
 
@@ -68,12 +68,10 @@ class SplashLogic extends GetxController {
 
     if (!await dir.exists()) return [];
 
-    final List<String> audioFiles = [];
+    final List<OneSong> audioFiles = [];
     var cleaned = await DbController.songsBox.clear();
     await DbController.picturesBox.clear();
     Get.log('Songs Cleaned: $cleaned');
-
-    Map<String, dynamic> pictures = {};
 
     await for (final entity in dir.list(recursive: false, followLinks: false)) {
       if (entity is File) {
@@ -82,10 +80,24 @@ class SplashLogic extends GetxController {
         if (audioExtensions.any((e) => ext.endsWith(e))) {
           try {
             var meta = readMetadata(entity, getImage: true);
-            pictures[meta.file.path] = meta.pictures.first.bytes;
-            var metaJson = Converter.toJson(meta);
-            await DbController.songsBox.add(metaJson);
-            audioFiles.add(entity.path);
+
+            var oneSong = OneSong(
+              album: meta.album ?? "",
+              year: meta.year?.year ?? 0,
+              artist: meta.artist ?? "",
+              title: meta.title ?? "",
+              trackNumber: meta.trackNumber ?? 0,
+              trackTotal: meta.trackTotal ?? 0,
+              duration: meta.duration ?? Duration.zero,
+              genres: meta.genres,
+              discNumber: meta.discNumber ?? 0,
+              totalDisc: meta.totalDisc ?? 0,
+              lyrics: meta.lyrics ?? "",
+              file: meta.file.path,
+              picture: base64Encode(meta.pictures.first.bytes),
+            );
+
+            audioFiles.add(oneSong);
           } catch (e) {
             Get.log('Error reading metadata: $e');
           }
@@ -93,7 +105,7 @@ class SplashLogic extends GetxController {
       }
     }
 
-    await DbController.picturesBox.add(jsonEncode(pictures));
+    await DbController.songsBox.addAll(audioFiles);
     Get.log('Audio Files Found: ${audioFiles.length}');
     Get.off(() => HomePage());
     return audioFiles;

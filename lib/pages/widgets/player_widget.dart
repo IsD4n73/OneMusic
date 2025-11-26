@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:audio_metadata_reader/audio_metadata_reader.dart';
 import 'package:flutter/material.dart';
 import 'package:one_music/models/one_song.dart';
 import 'package:one_music/theme/theme_extensions.dart';
