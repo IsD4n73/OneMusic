@@ -18,6 +18,7 @@ class SettingsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      borderRadius: BorderRadius.circular(20),
       child: Card(
         color: selected
             ? context.colorScheme.primary
@@ -27,7 +28,18 @@ class SettingsCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [icon, SizedBox(height: 10), Text(text)],
+            children: [
+              icon,
+              SizedBox(height: 10),
+              Text(
+                text,
+                style: TextStyle(
+                  color: selected
+                      ? context.colorScheme.onPrimary
+                      : context.colorScheme.onSurface,
+                ),
+              ),
+            ],
           ),
         ),
       ),

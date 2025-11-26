@@ -6,6 +6,7 @@ import 'package:one_music/pages/widgets/player_widget.dart';
 import 'package:one_music/pages/widgets/one_app_bar.dart';
 import 'package:one_music/pages/widgets/song_tile.dart';
 
+import '../widgets/one_error_widget.dart';
 import 'logic.dart';
 
 class SongsPage extends StatelessWidget {
@@ -39,29 +40,36 @@ class SongsPage extends StatelessWidget {
                         ),
                       ),
                       Obx(
-                        () => ListView.builder(
-                          shrinkWrap: true,
-                          padding: EdgeInsets.zero,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: logic.songs.length,
-                          itemBuilder: (context, index) => Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SongTile(
-                                song: logic.songs[index],
-                                isSelected:
-                                    logic.songs[index].data.file.path ==
-                                    logic.playingSong.value?.data.file.path,
-                                onTap: () {},
-                                isPlaying: false,
+                        () => logic.songs.isEmpty
+                            ? OneErrorWidget(error: "no_songs_found".tr())
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                padding: EdgeInsets.zero,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: logic.songs.length,
+                                itemBuilder: (context, index) => Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SongTile(
+                                      song: logic.songs[index],
+                                      isSelected:
+                                          logic.songs[index].data.file.path ==
+                                          logic
+                                              .playingSong
+                                              .value
+                                              ?.data
+                                              .file
+                                              .path,
+                                      onTap: () {},
+                                      isPlaying: false,
+                                    ),
+                                    index == (logic.songs.length - 1) &&
+                                            logic.playingSong.value != null
+                                        ? SizedBox(height: 70)
+                                        : SizedBox.shrink(),
+                                  ],
+                                ),
                               ),
-                              index == (logic.songs.length - 1) &&
-                                      logic.playingSong.value != null
-                                  ? SizedBox(height: 70)
-                                  : SizedBox.shrink(),
-                            ],
-                          ),
-                        ),
                       ),
                       SizedBox(height: 10),
                     ],

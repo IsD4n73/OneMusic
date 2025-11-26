@@ -20,7 +20,6 @@ class Converter {
       'lyrics': metadata.lyrics,
       'bitrate': metadata.bitrate,
       'sampleRate': metadata.sampleRate,
-      //'pictures': metadata.pictures.map((p) => p.bytes).toList(),
       'file': metadata.file.path,
     };
   }

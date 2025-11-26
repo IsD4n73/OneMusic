@@ -3,7 +3,7 @@ import 'app_constants.dart';
 
 /// AppTheme provides light and dark theme configurations with Material 3 support
 /// Generated with Flutter Theme Generator - Clean, modular, and maintainable
-/// 
+///
 /// Features:
 /// ✅ Uses AppConstants for consistent design tokens
 /// ✅ Modular structure with separate theme components
@@ -24,7 +24,8 @@ class AppTheme {
   static ThemeData get darkTheme => theme(darkScheme());
 
   /// Light medium contrast theme
-  static ThemeData get lightMediumContrast => theme(lightMediumContrastScheme());
+  static ThemeData get lightMediumContrast =>
+      theme(lightMediumContrastScheme());
 
   /// Light high contrast theme
   static ThemeData get lightHighContrast => theme(lightHighContrastScheme());
@@ -82,13 +83,13 @@ class AppTheme {
       onTertiaryFixed: Color(0xFF000000),
       tertiaryFixedDim: Color(0xFF3c3c3c),
       onTertiaryFixedVariant: Color(0xFF000000),
-      surfaceDim: Color(0xFFE6E0E9),
-      surfaceBright: Color(0xFFFFFBFE),
-      surfaceContainerLowest: Color(0xFFFFFFFF),
-      surfaceContainerLow: Color(0xFFF7F2FA),
-      surfaceContainer: Color(0xFFF3EDF7),
-      surfaceContainerHigh: Color(0xFFECE6F0),
-      surfaceContainerHighest: Color(0xFFE6E0E9),
+      surfaceDim: Color(0xFFD7D7D7),
+      surfaceBright: Color(0xFFD7D7D7),
+      surfaceContainerLowest: Color(0xFFD7D7D7),
+      surfaceContainerLow: Color(0xFFD7D7D7),
+      surfaceContainer: Color(0xFFD7D7D7),
+      surfaceContainerHigh: Color(0xFFD7D7D7),
+      surfaceContainerHighest: Color(0xFFD7D7D7),
     );
   }
 
@@ -190,7 +191,9 @@ class AppTheme {
     brightness: colorScheme.brightness,
     colorScheme: colorScheme,
     textTheme: _textTheme,
-    appBarTheme: colorScheme.brightness == Brightness.light ? _lightAppBarTheme : _darkAppBarTheme,
+    appBarTheme: colorScheme.brightness == Brightness.light
+        ? _lightAppBarTheme
+        : _darkAppBarTheme,
     elevatedButtonTheme: _elevatedButtonTheme,
     textButtonTheme: _textButtonTheme,
     outlinedButtonTheme: _outlinedButtonTheme,
@@ -212,7 +215,6 @@ class AppTheme {
   // ═══════════════════════════════════════════════════════════════════════════════
   // 🎨 THEME COMPONENTS - All using AppConstants for consistency
   // ═══════════════════════════════════════════════════════════════════════════════
-
 
   /// Text theme using AppConstants for consistent font sizes
   static final TextTheme _textTheme = TextTheme(
@@ -308,20 +310,20 @@ class AppTheme {
     ),
   );
 
-
   /// Elevated button theme
-  static final ElevatedButtonThemeData _elevatedButtonTheme = ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      elevation: AppConstants.elevationLevel2,
-      padding: EdgeInsets.symmetric(
-        horizontal: AppConstants.spacingLG,
-        vertical: AppConstants.spacingMD,
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppConstants.radiusMD),
-      ),
-    ),
-  );
+  static final ElevatedButtonThemeData _elevatedButtonTheme =
+      ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          elevation: AppConstants.elevationLevel2,
+          padding: EdgeInsets.symmetric(
+            horizontal: AppConstants.spacingLG,
+            vertical: AppConstants.spacingMD,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppConstants.radiusMD),
+          ),
+        ),
+      );
 
   /// Text button theme
   static final TextButtonThemeData _textButtonTheme = TextButtonThemeData(
@@ -337,39 +339,39 @@ class AppTheme {
   );
 
   /// Outlined button theme
-  static final OutlinedButtonThemeData _outlinedButtonTheme = OutlinedButtonThemeData(
-    style: OutlinedButton.styleFrom(
-      padding: EdgeInsets.symmetric(
-        horizontal: AppConstants.spacingLG,
-        vertical: AppConstants.spacingMD,
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppConstants.radiusMD),
-      ),
-    ),
-  );
-
+  static final OutlinedButtonThemeData _outlinedButtonTheme =
+      OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          padding: EdgeInsets.symmetric(
+            horizontal: AppConstants.spacingLG,
+            vertical: AppConstants.spacingMD,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppConstants.radiusMD),
+          ),
+        ),
+      );
 
   /// Input decoration theme
-  static final InputDecorationTheme _inputDecorationTheme = InputDecorationTheme(
-    contentPadding: EdgeInsets.symmetric(
-      horizontal: AppConstants.spacingMD,
-      vertical: AppConstants.spacingMD,
-    ),
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(AppConstants.radiusMD),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(AppConstants.radiusMD),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(AppConstants.radiusMD),
-    ),
-    errorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(AppConstants.radiusMD),
-    ),
-  );
-
+  static final InputDecorationTheme _inputDecorationTheme =
+      InputDecorationTheme(
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: AppConstants.spacingMD,
+          vertical: AppConstants.spacingMD,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppConstants.radiusMD),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppConstants.radiusMD),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppConstants.radiusMD),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppConstants.radiusMD),
+        ),
+      );
 
   /// App bar theme for light mode
   static final AppBarTheme _lightAppBarTheme = AppBarTheme(
@@ -408,7 +410,8 @@ class AppTheme {
   );
 
   /// Progress indicator theme
-  static final ProgressIndicatorThemeData _progressIndicatorTheme = ProgressIndicatorThemeData();
+  static final ProgressIndicatorThemeData _progressIndicatorTheme =
+      ProgressIndicatorThemeData();
 
   /// Divider theme
   static final DividerThemeData _dividerTheme = DividerThemeData(
@@ -417,9 +420,8 @@ class AppTheme {
   );
 
   /// Bottom navigation bar theme
-  static final BottomNavigationBarThemeData _bottomNavigationBarTheme = BottomNavigationBarThemeData(
-    type: BottomNavigationBarType.fixed,
-  );
+  static final BottomNavigationBarThemeData _bottomNavigationBarTheme =
+      BottomNavigationBarThemeData(type: BottomNavigationBarType.fixed);
 
   /// Tab bar theme
   static final TabBarThemeData _tabBarTheme = TabBarThemeData(
@@ -457,10 +459,10 @@ class AppTheme {
 extension CustomColors on ColorScheme {
   /// Success color for positive actions and states
   Color get success => const Color(0xFF2E7D32);
-  
+
   /// Warning color for caution states
   Color get warning => const Color(0xFFF57C00);
-  
+
   /// Info color for informational states
   Color get info => const Color(0xFF1976D2);
 }
