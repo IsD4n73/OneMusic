@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:audio_metadata_reader/audio_metadata_reader.dart';
 import 'package:flutter/material.dart';
 import 'package:mini_music_visualizer/mini_music_visualizer.dart';
@@ -29,7 +31,7 @@ class SongTile extends StatelessWidget {
           children: [
             song.picture != null
                 ? Image.memory(
-                    song.picture!,
+                    base64Decode(song.picture!),
                     width: 50,
                     height: 50,
                     errorBuilder: (context, error, stackTrace) => Image.asset(
@@ -45,11 +47,8 @@ class SongTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    song.data.title ?? song.data.file.path.split("/").last,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(song.data.artist ?? "", style: TextStyle(fontSize: 13)),
+                  Text(song.title, overflow: TextOverflow.ellipsis),
+                  Text(song.artist, style: TextStyle(fontSize: 13)),
                 ],
               ),
             ),
@@ -64,7 +63,7 @@ class SongTile extends StatelessWidget {
                 : SizedBox.shrink(),
             SizedBox(width: 5),
             Text(
-              Formatter.formatDuration(song.data.duration ?? Duration.zero),
+              Formatter.formatDuration(song.duration),
               style: TextStyle(
                 fontSize: 10,
                 color: context.colorScheme.primary,

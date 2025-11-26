@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:audio_metadata_reader/audio_metadata_reader.dart';
 import 'package:flutter/material.dart';
 import 'package:one_music/models/one_song.dart';
@@ -36,7 +38,7 @@ class PlayerWidget extends StatelessWidget {
             children: [
               song.picture != null
                   ? Image.memory(
-                      song.picture!,
+                      base64Decode(song.picture!),
                       width: 50,
                       height: 50,
                       errorBuilder: (context, error, stackTrace) => Image.asset(
@@ -54,8 +56,8 @@ class PlayerWidget extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(song.data.title ?? song.data.file.path.split("/").last),
-                  Text(song.data.artist ?? "", style: TextStyle(fontSize: 13)),
+                  Text(song.title),
+                  Text(song.artist, style: TextStyle(fontSize: 13)),
                 ],
               ),
               Spacer(),

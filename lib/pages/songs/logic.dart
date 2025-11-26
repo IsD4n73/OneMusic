@@ -21,7 +21,7 @@ class SongsLogic extends GetxController {
     Map<String, dynamic> pictureLit = jsonDecode(jsonPicture);
     var songList = jsonMeta.map((e) => Converter.fromJson(e)).toList();
 
-    var tempList = songList
+    /*var tempList = songList
         .map(
           (song) => OneSong(
             song,
@@ -36,6 +36,6 @@ class SongsLogic extends GetxController {
       ),
     );
 
-    songs.value = tempList;
+    songs.value = tempList;*/
   }
 }

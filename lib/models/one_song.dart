@@ -1,26 +1,34 @@
-import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:audio_metadata_reader/audio_metadata_reader.dart';
-import 'package:one_music/common/converter.dart';
-
 class OneSong {
-  final AudioMetadata data;
-  final Uint8List? picture;
+  final String album;
+  final int year;
+  final String artist;
+  final String title;
+  final int trackNumber;
+  final int trackTotal;
+  final Duration duration;
+  final List<String> genres;
+  final int discNumber;
+  final int totalDisc;
+  final String lyrics;
+  final File file;
+  final String? picture;
 
-  OneSong(this.data, this.picture);
-
-  Map<String, dynamic> toJson() {
-    return {
-      "data": Converter.toJson(data),
-      "picture": base64Encode(picture ?? []),
-    };
-  }
-
-  factory OneSong.fromJson(Map<String, dynamic> json) {
-    return OneSong(
-      Converter.fromJson(json["data"]),
-      base64Decode(json["picture"]),
-    );
-  }
+  OneSong({
+    required this.album,
+    required this.year,
+    required this.artist,
+    required this.title,
+    required this.trackNumber,
+    required this.trackTotal,
+    required this.duration,
+    required this.genres,
+    required this.discNumber,
+    required this.totalDisc,
+    required this.lyrics,
+    required this.file,
+    required this.picture,
+  });
 }

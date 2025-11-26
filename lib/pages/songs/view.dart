@@ -53,13 +53,8 @@ class SongsPage extends StatelessWidget {
                                     SongTile(
                                       song: logic.songs[index],
                                       isSelected:
-                                          logic.songs[index].data.file.path ==
-                                          logic
-                                              .playingSong
-                                              .value
-                                              ?.data
-                                              .file
-                                              .path,
+                                          logic.songs[index].file.path ==
+                                          logic.playingSong.value?.file.path,
                                       onTap: () {},
                                       isPlaying: false,
                                     ),
