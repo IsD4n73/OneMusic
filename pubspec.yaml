@@ -37,9 +37,9 @@ dependencies:
   audio_metadata_reader: ^1.4.2
   mini_music_visualizer: ^1.1.4
 
-  lottie: ^3.3.2
   persistent_bottom_nav_bar_v2: ^6.2.0
   toastification: ^3.0.3
+  flutter_context_menu: ^0.4.0
 
   get: ^4.7.3
   hive_ce: ^2.15.1

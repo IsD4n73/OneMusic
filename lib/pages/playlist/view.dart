@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
+import 'package:one_music/pages/playlist/playlist_context_menu.dart';
 import 'package:one_music/pages/widgets/one_error_widget.dart';
 
 import '../widgets/one_app_bar.dart';
@@ -63,9 +64,15 @@ class PlaylistPage extends StatelessWidget {
                           mainAxisSpacing: 5,
                         ),
                         itemBuilder: (context, index) {
-                          return InkWell(
-                            borderRadius: BorderRadius.circular(20),
+                          return GestureDetector(
                             onTap: () {},
+                            onLongPressDown: (details) {
+                              PlaylistContextMenu.showPlaylist(
+                                () {},
+                                () {},
+                                details.globalPosition,
+                              );
+                            },
                             child: Card(
                               child: Column(
                                 children: [

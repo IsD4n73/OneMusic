@@ -9,6 +9,7 @@ import 'package:one_music/theme/theme_extensions.dart';
 class SongTile extends StatelessWidget {
   final OneSong song;
   final void Function() onTap;
+  final void Function(Offset position) onLongTap;
   final bool isPlaying;
   final bool isSelected;
 
@@ -18,13 +19,14 @@ class SongTile extends StatelessWidget {
     required this.onTap,
     required this.isPlaying,
     required this.isSelected,
+    required this.onLongTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(20),
-      onTap: () {},
+    return GestureDetector(
+      onTap: onTap,
+      onLongPressStart: (details) => onLongTap(details.globalPosition),
       child: Card(
         margin: EdgeInsets.all(8),
         child: Padding(

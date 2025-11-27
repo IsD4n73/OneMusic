@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
+import 'package:one_music/pages/songs/song_context_menu.dart';
 import 'package:one_music/pages/widgets/player_widget.dart';
 import 'package:one_music/pages/widgets/one_app_bar.dart';
 import 'package:one_music/pages/widgets/song_tile.dart';
@@ -55,6 +56,13 @@ class SongsPage extends StatelessWidget {
                                           logic.songs[index].file ==
                                           logic.playingSong.value?.file,
                                       onTap: () {},
+                                      onLongTap: (Offset position) {
+                                        SongContextMenu.show(
+                                          () {},
+                                          () {},
+                                          position,
+                                        );
+                                      },
                                       isPlaying: false,
                                     ),
                                     index == (logic.songs.length - 1) &&
