@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:one_music/pages/songs/song_context_menu.dart';
+import 'package:one_music/pages/songs/song_edit_sheet.dart';
 import 'package:one_music/pages/widgets/player_widget.dart';
 import 'package:one_music/pages/widgets/one_app_bar.dart';
 import 'package:one_music/pages/widgets/song_tile.dart';
@@ -59,7 +60,19 @@ class SongsPage extends StatelessWidget {
                                       onTap: () {},
                                       onLongTap: (Offset position) {
                                         SongContextMenu.show(
-                                          onEditMeta: () {},
+                                          onEditMeta: () {
+                                            logic.prefillFields(
+                                              logic.songs[index],
+                                            );
+
+                                            Get.bottomSheet(
+                                              SongEditSheet(
+                                                song: logic.songs[index],
+                                              ),
+                                              enableDrag: true,
+                                              isDismissible: true,
+                                            );
+                                          },
                                           onDelete: () {
                                             Get.defaultDialog(
                                               title: "delete_song_dialog_title"
