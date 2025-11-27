@@ -5,6 +5,7 @@ import 'package:one_music/pages/songs/song_context_menu.dart';
 import 'package:one_music/pages/widgets/player_widget.dart';
 import 'package:one_music/pages/widgets/one_app_bar.dart';
 import 'package:one_music/pages/widgets/song_tile.dart';
+import 'package:one_music/theme/theme_extensions.dart';
 
 import '../widgets/one_error_widget.dart';
 import 'logic.dart';
@@ -59,7 +60,49 @@ class SongsPage extends StatelessWidget {
                                       onLongTap: (Offset position) {
                                         SongContextMenu.show(
                                           onEditMeta: () {},
-                                          onDelete: () {},
+                                          onDelete: () {
+                                            Get.defaultDialog(
+                                              title: "delete_song_dialog_title"
+                                                  .tr(),
+                                              content: Text(
+                                                "delete_song_dialog_content"
+                                                    .tr(),
+                                              ),
+                                              contentPadding: EdgeInsets.all(8),
+                                              actions: [
+                                                OutlinedButton(
+                                                  style:
+                                                      OutlinedButton.styleFrom(
+                                                        foregroundColor: Get
+                                                            .context!
+                                                            .colorScheme
+                                                            .onSurface,
+                                                      ),
+                                                  onPressed: () {
+                                                    Get.back();
+                                                  },
+                                                  child: Text("cancel".tr()),
+                                                ),
+                                                OutlinedButton(
+                                                  style:
+                                                      OutlinedButton.styleFrom(
+                                                        side: BorderSide(
+                                                          color: Get
+                                                              .context!
+                                                              .colorScheme
+                                                              .primary,
+                                                        ),
+                                                      ),
+                                                  onPressed: () async {
+                                                    logic.deleteSong(
+                                                      logic.songs[index],
+                                                    );
+                                                  },
+                                                  child: Text("confirm".tr()),
+                                                ),
+                                              ],
+                                            );
+                                          },
                                           offset: position,
                                         );
                                       },
