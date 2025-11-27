@@ -58,9 +58,9 @@ class SongsPage extends StatelessWidget {
                                       onTap: () {},
                                       onLongTap: (Offset position) {
                                         SongContextMenu.show(
-                                          () {},
-                                          () {},
-                                          position,
+                                          onEditMeta: () {},
+                                          onDelete: () {},
+                                          offset: position,
                                         );
                                       },
                                       isPlaying: false,

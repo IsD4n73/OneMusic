@@ -4,11 +4,11 @@ import 'package:flutter_context_menu/flutter_context_menu.dart';
 import 'package:get/get.dart' hide Trans;
 
 class SongContextMenu {
-  static void show(
-    void Function() onEditMeta,
-    void Function() onDelete,
-    Offset offset,
-  ) {
+  static void show({
+    required void Function() onEditMeta,
+    required void Function() onDelete,
+    required Offset offset,
+  }) {
     final entries = <ContextMenuEntry>[
       MenuHeader(text: "song_menu".tr()),
       MenuItem(

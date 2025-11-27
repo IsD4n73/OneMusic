@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:one_music/pages/playlist/playlist_context_menu.dart';
 import 'package:one_music/pages/widgets/one_error_widget.dart';
+import 'package:one_music/theme/theme_extensions.dart';
 
 import '../widgets/one_app_bar.dart';
 import 'logic.dart';
@@ -66,11 +67,49 @@ class PlaylistPage extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {},
-                            onLongPressDown: (details) {
+                            onLongPressStart: (details) {
                               PlaylistContextMenu.showPlaylist(
-                                () {},
-                                () {},
-                                details.globalPosition,
+                                onEditMeta: () {},
+                                onDelete: () {
+                                  Get.defaultDialog(
+                                    title: "delete_playlist_dialog_title".tr(),
+                                    contentPadding: EdgeInsets.all(8),
+                                    content: Text(
+                                      "delete_playlist_dialog_content".tr(),
+                                    ),
+                                    actions: [
+                                      OutlinedButton(
+                                        style: OutlinedButton.styleFrom(
+                                          foregroundColor: Get
+                                              .context!
+                                              .colorScheme
+                                              .onSurface,
+                                        ),
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                        child: Text("cancel".tr()),
+                                      ),
+                                      OutlinedButton(
+                                        style: OutlinedButton.styleFrom(
+                                          side: BorderSide(
+                                            color: Get
+                                                .context!
+                                                .colorScheme
+                                                .primary,
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                          logic.deletePlaylist(
+                                            logic.playlists[index].name,
+                                          );
+                                        },
+                                        child: Text("confirm".tr()),
+                                      ),
+                                    ],
+                                  );
+                                },
+                                offset: details.globalPosition,
                               );
                             },
                             child: Card(

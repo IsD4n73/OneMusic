@@ -4,15 +4,15 @@ import 'package:flutter_context_menu/flutter_context_menu.dart';
 import 'package:get/get.dart' hide Trans;
 
 class PlaylistContextMenu {
-  static void showPlaylist(
-    void Function() onEditMeta,
-    void Function() onDelete,
-    Offset offset,
-  ) {
+  static void showPlaylist({
+    required void Function() onEditMeta,
+    required void Function() onDelete,
+    required Offset offset,
+  }) {
     final entries = <ContextMenuEntry>[
       MenuHeader(text: "playlist_menu".tr()),
       MenuItem(
-        label: Text('edit_meta'.tr()),
+        label: Text('edit_playlist'.tr()),
         icon: Icon(Icons.edit),
         onSelected: (value) {
           onEditMeta();
@@ -32,7 +32,10 @@ class PlaylistContextMenu {
     showContextMenu(Get.context!, contextMenu: menu);
   }
 
-  static void showSong(void Function() onRemove, Offset offset) {
+  static void showSong({
+    required void Function() onRemove,
+    required Offset offset,
+  }) {
     final entries = <ContextMenuEntry>[
       MenuHeader(text: "song_menu".tr()),
       MenuItem(

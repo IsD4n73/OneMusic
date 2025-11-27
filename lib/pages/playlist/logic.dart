@@ -21,7 +21,6 @@ class PlaylistLogic extends GetxController {
   void addPlaylist() {
     Get.defaultDialog(
       barrierDismissible: false,
-
       contentPadding: EdgeInsets.all(8),
       actions: [
         OutlinedButton(
@@ -116,6 +115,17 @@ class PlaylistLogic extends GetxController {
 
     playlists.add(playlist);
     clearFields();
+  }
+
+  void deletePlaylist(String name) {
+    DbController.playlistsBox.delete(name);
+    playlists.removeWhere((element) => element.name == name);
+    Get.back();
+    AppToast.showToast(
+      "playlist_deleted",
+      "playlist_deleted_success",
+      style: "success",
+    );
   }
 
   @override

@@ -14,7 +14,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return PersistentTabView(
       backgroundColor: context.colorScheme.surface,
-
       tabs: [
         PersistentTabConfig(
           screen: SongsPage(),
