@@ -70,7 +70,6 @@ class SplashLogic extends GetxController {
 
     final List<OneSong> audioFiles = [];
     var cleaned = await DbController.songsBox.clear();
-    await DbController.picturesBox.clear();
     Get.log('Songs Cleaned: $cleaned');
 
     await for (final entity in dir.list(recursive: false, followLinks: false)) {

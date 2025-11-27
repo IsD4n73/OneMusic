@@ -7,6 +7,7 @@ import 'package:one_music/pages/playlist/playlist_context_menu.dart';
 import 'package:one_music/pages/widgets/one_error_widget.dart';
 import 'package:one_music/theme/theme_extensions.dart';
 
+import '../../models/one_song.dart';
 import '../widgets/one_app_bar.dart';
 import 'logic.dart';
 
@@ -69,7 +70,22 @@ class PlaylistPage extends StatelessWidget {
                             onTap: () {},
                             onLongPressStart: (details) {
                               PlaylistContextMenu.showPlaylist(
-                                onEditMeta: () {},
+                                onEditMeta: () {
+                                  logic.playlistNameController.text =
+                                      logic.playlists[index].name;
+
+                                  logic.selectedSongs.clear();
+                                  logic.selectedSongs.addAll(
+                                    logic.playlists[index].songs.map(
+                                      (e) => OneSong.fromJson(jsonDecode(e)),
+                                    ),
+                                  );
+
+                                  logic.addPlaylist(
+                                    edit: true,
+                                    toDelete: logic.playlists[index].name,
+                                  );
+                                },
                                 onDelete: () {
                                   Get.defaultDialog(
                                     title: "delete_playlist_dialog_title".tr(),

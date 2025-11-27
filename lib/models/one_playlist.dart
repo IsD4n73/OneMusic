@@ -4,7 +4,7 @@ class OnePlaylist {
   final int id;
   final String name;
   final String? picture;
-  final List<OneSong> songs;
+  final List<String> songs;
 
   OnePlaylist({
     required this.id,

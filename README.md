@@ -26,3 +26,7 @@
 
 
 Enjoy your music anytime, anywhere with **One Music**!  
+
+
+## DEV
+to generate Hive adaptesr: dart run build_runner build

@@ -28,4 +28,40 @@ class OneSong {
     required this.file,
     required this.picture,
   });
+
+  // from json
+  factory OneSong.fromJson(Map<String, dynamic> json) {
+    return OneSong(
+      album: json['album'],
+      year: json['year'],
+      artist: json['artist'],
+      title: json['title'],
+      trackNumber: json['trackNumber'],
+      trackTotal: json['trackTotal'],
+      duration: Duration(milliseconds: json['duration']),
+      genres: List<String>.from(json['genres']),
+      discNumber: json['discNumber'],
+      totalDisc: json['totalDisc'],
+      lyrics: json['lyrics'],
+      file: json['file'],
+      picture: json['picture'],
+    );
+  }
+
+  // to json
+  Map<String, dynamic> toJson() => {
+    'album': album,
+    'year': year,
+    'artist': artist,
+    'title': title,
+    'trackNumber': trackNumber,
+    'trackTotal': trackTotal,
+    'duration': duration.inMilliseconds,
+    'genres': genres,
+    'discNumber': discNumber,
+    'totalDisc': totalDisc,
+    'lyrics': lyrics,
+    'file': file,
+    'picture': picture,
+  };
 }

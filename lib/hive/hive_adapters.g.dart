@@ -90,7 +90,7 @@ class OnePlaylistAdapter extends TypeAdapter<OnePlaylist> {
       id: (fields[0] as num).toInt(),
       name: fields[1] as String,
       picture: fields[2] as String?,
-      songs: (fields[3] as List).cast<OneSong>(),
+      songs: (fields[3] as List).cast<String>(),
     );
   }
 

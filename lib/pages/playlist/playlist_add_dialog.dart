@@ -38,9 +38,16 @@ class PlaylistAddDialog extends StatelessWidget {
 
 class PlaylistSelectSongs extends StatelessWidget {
   final List<OneSong> songs;
+  final bool edit;
+  final String? playlistToDelete;
   final List<OneSong> selectedSongs = [];
 
-  PlaylistSelectSongs({super.key, required this.songs});
+  PlaylistSelectSongs({
+    super.key,
+    required this.songs,
+    required this.edit,
+    this.playlistToDelete,
+  });
 
   final PlaylistLogic logic = Get.put(PlaylistLogic());
 
@@ -99,6 +106,10 @@ class PlaylistSelectSongs extends StatelessWidget {
                         "no_songs_selected_playlist",
                       );
                       return;
+                    }
+
+                    if (edit) {
+                      logic.deletePlaylist(playlistToDelete ?? "");
                     }
                     logic.savePlaylist();
                     Get.back();
