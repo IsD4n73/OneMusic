@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -41,6 +42,42 @@ class SongEditSheet extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
+                    InkWell(
+                      onTap: () {
+                        logic.pickImage();
+                      },
+                      child: Stack(
+                        alignment: AlignmentGeometry.center,
+                        children: [
+                          Obx(() {
+                            return song.picture != null
+                                ? Image.memory(
+                                    logic.image.value.isNotEmpty
+                                        ? logic.image.value
+                                        : base64Decode(song.picture!),
+                                    width: 150,
+                                    height: 150,
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Image.asset(
+                                              "assets/images/icon.png",
+                                            ),
+                                  )
+                                : Image.asset(
+                                    "assets/images/icon.png",
+                                    width: 150,
+                                    height: 150,
+                                  );
+                          }),
+                          Icon(
+                            Icons.camera_alt,
+                            size: 50,
+                            color: context.colorScheme.primary,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 10),
                     TextField(
                       controller: logic.titleController,
                       onChanged: (value) => logic.checkFields(),

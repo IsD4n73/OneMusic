@@ -1,5 +1,3 @@
-import 'package:one_music/models/one_song.dart';
-
 class OnePlaylist {
   final int id;
   final String name;

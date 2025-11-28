@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:disable_battery_optimization/disable_battery_optimization.dart';
 import 'package:get/get.dart';
 import 'package:one_music/common/app_toast.dart';
 import 'package:one_music/common/db_controller.dart';
@@ -20,6 +21,22 @@ class SplashLogic extends GetxController {
     if (Platform.isAndroid) {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+
+      bool? isBatteryOptimizationDisabled =
+          await DisableBatteryOptimization.isBatteryOptimizationDisabled;
+      if (!(isBatteryOptimizationDisabled ?? true)) {
+        var opt =
+            await DisableBatteryOptimization.showDisableBatteryOptimizationSettings();
+        Get.log("Battery Optimization: $opt");
+      }
+
+      var manageStatus = await Permission.manageExternalStorage.request();
+      if (!manageStatus.isGranted) {
+        AppToast.showToast(
+          "permission_denied",
+          "permission_denied_manage_desc",
+        );
+      }
 
       var permissionGranted = false;
       if (androidInfo.version.sdkInt < 22) {
@@ -113,6 +130,8 @@ class SplashLogic extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getAudioFiles();
+    Future.delayed(Duration.zero, () async {
+      getAudioFiles();
+    });
   }
 }

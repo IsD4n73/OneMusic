@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'dart:typed_data';
 import 'package:audio_metadata_reader/audio_metadata_reader.dart';
+import 'package:disable_battery_optimization/disable_battery_optimization.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:one_music/common/app_toast.dart';
@@ -17,7 +19,7 @@ class SongsLogic extends GetxController {
   TextEditingController titleController = TextEditingController();
   TextEditingController artistController = TextEditingController();
   TextEditingController albumController = TextEditingController();
-
+  Rx<Uint8List> image = Uint8List(0).obs;
   RxString titleError = "".obs;
   RxString artistError = "".obs;
 
@@ -34,6 +36,7 @@ class SongsLogic extends GetxController {
     albumController.clear();
     titleError.value = "";
     artistError.value = "";
+    image.value = Uint8List(0);
   }
 
   bool checkFields() {
@@ -58,6 +61,11 @@ class SongsLogic extends GetxController {
       metadata.setAlbum(albumController.text);
       metadata.setArtist(artistController.text);
       metadata.setTitle(titleController.text);
+      if (image.value.isNotEmpty) {
+        metadata.setPictures([
+          Picture(image.value, "image/png", PictureType.coverFront),
+        ]);
+      }
     });
 
     songs.removeWhere((element) => element.file == path);
@@ -120,10 +128,40 @@ class SongsLogic extends GetxController {
     Get.back();
   }
 
+  Future<void> pickImage() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+      withData: true,
+      compressionQuality: 50,
+      withReadStream: true,
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'png'],
+    );
+
+    if (result == null ||
+        result.files.isEmpty ||
+        result.files.first.bytes == null) {
+      AppToast.showToast("image_error", "image_error_desc", style: "info");
+      return;
+    }
+
+    image.value = result.files.first.bytes ?? Uint8List(0);
+  }
+
   @override
   void onInit() {
     super.onInit();
 
     songs.value = List<OneSong>.from(DbController.songsBox.values);
+
+    Future.delayed(Duration.zero, () async {
+      bool? isBatteryOptimizationDisabled =
+          await DisableBatteryOptimization.isBatteryOptimizationDisabled;
+      if (!(isBatteryOptimizationDisabled ?? true)) {
+        var opt =
+            await DisableBatteryOptimization.showDisableBatteryOptimizationSettings();
+        Get.log("Battery Optimization: $opt");
+      }
+    });
   }
 }
