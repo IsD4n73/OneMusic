@@ -99,7 +99,7 @@ class AppTheme {
       brightness: Brightness.dark,
       primary: Color(0xFFe10000),
       surfaceTint: Color(0xFFe10000),
-      onPrimary: Color(0xFFa50000),
+      onPrimary: Color(0xffffffff),
       primaryContainer: Color(0xFFb90000),
       onPrimaryContainer: Color(0xFFff5564),
       secondary: Color(0xFFebebeb),

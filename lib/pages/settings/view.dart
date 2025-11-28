@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -23,19 +25,18 @@ class SettingsPage extends StatelessWidget {
           children: [
             OneAppBar(),
             SettingsTile(
-              title: "ui_settings",
-              subtitle: "ui_settings_subtitle",
-            ),
-            SettingsTile(
               title: "language_settings",
               subtitle: "language_settings_subtitle",
             ),
             GridView(
               shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              physics: NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
+                childAspectRatio: 3 / 2,
               ),
               children: [
                 SettingsCard(
@@ -67,9 +68,55 @@ class SettingsPage extends StatelessWidget {
               ],
             ),
             SettingsTile(
-              title: "information_settings",
-              subtitle: "information_settings_subtitle",
+              title: "general_settings",
+              subtitle: "general_settings_subtitle",
             ),
+            SizedBox(height: 20),
+            Platform.isAndroid
+                ? Obx(
+                    () => SwitchListTile(
+                      value: logic.backgroundPermission.value,
+                      onChanged: (value) {
+                        if (!value) {
+                          AppToast.showToast(
+                            "permission_already_granted",
+                            "permission_already_granted_desc",
+                            style: "info",
+                          );
+                          return;
+                        }
+
+                        logic.backgroundPermissionChange();
+                      },
+                      title: Text("background_permission_settings".tr()),
+                      subtitle: Text(
+                        "background_permission_settings_subtitle".tr(),
+                      ),
+                    ),
+                  )
+                : SizedBox.shrink(),
+            Platform.isAndroid
+                ? Obx(
+                    () => SwitchListTile(
+                      value: logic.storagePermission.value,
+                      onChanged: (value) {
+                        if (!value) {
+                          AppToast.showToast(
+                            "permission_already_granted",
+                            "permission_already_granted_desc",
+                            style: "info",
+                          );
+                          return;
+                        }
+                        logic.storagePermissionChange();
+                      },
+                      title: Text("storage_permission_settings".tr()),
+                      subtitle: Text(
+                        "storage_permission_settings_subtitle".tr(),
+                      ),
+                    ),
+                  )
+                : SizedBox.shrink(),
           ],
         ),
       ),
