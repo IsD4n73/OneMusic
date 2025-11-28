@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
+import 'package:one_music/controller/one_player_controller.dart';
 import 'package:one_music/pages/songs/song_context_menu.dart';
 import 'package:one_music/pages/songs/song_edit_sheet.dart';
 import 'package:one_music/pages/widgets/player_widget.dart';
@@ -15,6 +16,7 @@ class SongsPage extends StatelessWidget {
   SongsPage({super.key});
 
   final SongsLogic logic = Get.put(SongsLogic());
+  final OnePlayerController controller = Get.put(OnePlayerController());
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +58,7 @@ class SongsPage extends StatelessWidget {
                                       song: logic.songs[index],
                                       isSelected:
                                           logic.songs[index].file ==
-                                          logic.playingSong.value?.file,
+                                          controller.playingSong.value?.file,
                                       onTap: () {},
                                       onLongTap: (Offset position) {
                                         SongContextMenu.show(
@@ -122,7 +124,7 @@ class SongsPage extends StatelessWidget {
                                       isPlaying: false,
                                     ),
                                     index == (logic.songs.length - 1) &&
-                                            logic.playingSong.value != null
+                                            controller.playingSong.value != null
                                         ? SizedBox(height: 70)
                                         : SizedBox.shrink(),
                                   ],
@@ -135,13 +137,21 @@ class SongsPage extends StatelessWidget {
                 ),
               ),
               Obx(
-                () => logic.playingSong.value != null
+                () => controller.playingSong.value != null
                     ? PlayerWidget(
-                        song: logic.playingSong.value!,
-                        onLeft: () {},
-                        onPlay: () {},
-                        onRight: () {},
-                        onTapCard: () {},
+                        song: controller.playingSong.value!,
+                        onLeft: () {
+                          controller.previousSong();
+                        },
+                        onPlay: () {
+                          controller.togglePlaySong();
+                        },
+                        onRight: () {
+                          controller.nextSong();
+                        },
+                        onTapCard: () {
+                          //TODO open player page
+                        },
                       )
                     : SizedBox.shrink(),
               ),

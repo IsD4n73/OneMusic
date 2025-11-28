@@ -15,7 +15,6 @@ import '../../models/one_song.dart';
 
 class SongsLogic extends GetxController {
   RxList<OneSong> songs = <OneSong>[].obs;
-  Rx<OneSong?> playingSong = null.obs;
   TextEditingController titleController = TextEditingController();
   TextEditingController artistController = TextEditingController();
   TextEditingController albumController = TextEditingController();
