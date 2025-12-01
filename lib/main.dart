@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_ce_flutter/adapters.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:one_music/common/db_controller.dart';
 import 'package:one_music/hive/hive_adapters.dart';
 
@@ -9,6 +10,12 @@ import 'app.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await JustAudioBackground.init(
+    androidNotificationChannelId: 'it.d4n73.onemusic.channel.audio',
+    androidNotificationChannelName: 'Audio playback',
+    androidNotificationOngoing: true,
+  );
+
   await Hive.initFlutter();
 
   Hive.registerAdapter(OneSongAdapter());

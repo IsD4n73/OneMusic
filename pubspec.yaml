@@ -34,6 +34,7 @@ dependencies:
   easy_localization: ^3.0.8
 
   just_audio: ^0.10.5
+  just_audio_background: ^0.0.1-beta.17
   audio_metadata_reader: ^1.4.2
   mini_music_visualizer: ^1.1.4
   audio_video_progress_bar: ^2.0.3

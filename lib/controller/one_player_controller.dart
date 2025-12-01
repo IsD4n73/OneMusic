@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:one_music/models/one_song.dart';
 
 class OnePlayerController extends GetxController {
@@ -13,7 +14,20 @@ class OnePlayerController extends GetxController {
       await player.clearAudioSources();
       Get.log("loadPlaylist, clearing");
       await player.setAudioSources(
-        songs.map((e) => AudioSource.file(e.file)).toList(),
+        songs
+            .map(
+              (e) => AudioSource.file(
+                e.file,
+                tag: MediaItem(
+                  id: e.file,
+                  title: e.title,
+                  album: e.album,
+                  artist: e.artist,
+                  duration: e.duration,
+                ),
+              ),
+            )
+            .toList(),
         initialIndex: index,
       );
       await player.play();
