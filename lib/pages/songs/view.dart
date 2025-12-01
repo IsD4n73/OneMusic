@@ -30,7 +30,7 @@ class SongsPage extends StatelessWidget {
           textTwo: "songs".tr(),
           rightIcon: Icons.search,
           onTap: () {
-            Get.to(() => SearchPage());
+            Get.to(() => SearchPage(coming: runtimeType));
           },
         ),
         Expanded(
@@ -56,117 +56,135 @@ class SongsPage extends StatelessWidget {
                                 padding: EdgeInsets.zero,
                                 physics: NeverScrollableScrollPhysics(),
                                 itemCount: logic.songs.length,
-                                itemBuilder: (context, index) => Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SongTile(
-                                      song: logic.songs[index],
-                                      isSelected: logic.songs[index].selected,
-                                      onTap: () async {
-                                        if (controller
+                                itemBuilder: (context, index) {
+                                  ever(controller.playingSong, (callback) {
+                                    var tmpSong = logic.songs[index];
+                                    logic.songs.removeAt(index);
+                                    logic.songs.insert(index, tmpSong);
+                                  });
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SongTile(
+                                        song: logic.songs[index],
+                                        isPlaying: true,
+                                        isSelected:
+                                            controller
                                                 .playingSong
                                                 .value
                                                 ?.file ==
-                                            logic.songs[index].file) {
-                                          controller.isPlaying.value =
-                                              !controller.player.playing;
-                                          controller.togglePlaySong();
-                                          return;
-                                        }
+                                            logic.songs[index].file,
+                                        onTap: () async {
+                                          if (controller
+                                                  .playingSong
+                                                  .value
+                                                  ?.file ==
+                                              logic.songs[index].file) {
+                                            controller.isPlaying.value =
+                                                !controller.player.playing;
+                                            controller.togglePlaySong();
+                                            return;
+                                          }
 
-                                        List<OneSong> tmpSongs = [];
+                                          List<OneSong> tmpSongs = [];
 
-                                        for (var element in logic.songs) {
-                                          tmpSongs.add(
-                                            element.copyWith(selected: false),
+                                          for (var element in logic.songs) {
+                                            tmpSongs.add(
+                                              element.copyWith(selected: false),
+                                            );
+                                          }
+
+                                          logic.songs.clear();
+                                          logic.songs.addAll(tmpSongs);
+
+                                          logic.songs[index] = logic
+                                              .songs[index]
+                                              .copyWith(selected: true);
+
+                                          controller.playingSong.value =
+                                              logic.songs[index];
+
+                                          controller.isPlaying.value = true;
+
+                                          await controller.loadPlaylist(
+                                            logic.songs,
+                                            index,
                                           );
-                                        }
+                                        },
+                                        onLongTap: (Offset position) {
+                                          SongContextMenu.show(
+                                            onEditMeta: () {
+                                              logic.prefillFields(
+                                                logic.songs[index],
+                                              );
 
-                                        logic.songs.clear();
-                                        logic.songs.addAll(tmpSongs);
-
-                                        logic.songs[index] = logic.songs[index]
-                                            .copyWith(selected: true);
-
-                                        controller.playingSong.value =
-                                            logic.songs[index];
-
-                                        controller.isPlaying.value = true;
-
-                                        await controller.loadPlaylist(
-                                          logic.songs,
-                                          index,
-                                        );
-                                      },
-                                      onLongTap: (Offset position) {
-                                        SongContextMenu.show(
-                                          onEditMeta: () {
-                                            logic.prefillFields(
-                                              logic.songs[index],
-                                            );
-
-                                            Get.bottomSheet(
-                                              SongEditSheet(
-                                                song: logic.songs[index],
-                                              ),
-                                              enableDrag: true,
-                                              isDismissible: true,
-                                            );
-                                          },
-                                          onDelete: () {
-                                            Get.defaultDialog(
-                                              title: "delete_song_dialog_title"
-                                                  .tr(),
-                                              content: Text(
-                                                "delete_song_dialog_content"
-                                                    .tr(),
-                                              ),
-                                              contentPadding: EdgeInsets.all(8),
-                                              actions: [
-                                                OutlinedButton(
-                                                  style:
-                                                      OutlinedButton.styleFrom(
-                                                        foregroundColor: Get
-                                                            .context!
-                                                            .colorScheme
-                                                            .onSurface,
-                                                      ),
-                                                  onPressed: () {
-                                                    Get.back();
-                                                  },
-                                                  child: Text("cancel".tr()),
+                                              Get.bottomSheet(
+                                                SongEditSheet(
+                                                  song: logic.songs[index],
                                                 ),
-                                                OutlinedButton(
-                                                  style:
-                                                      OutlinedButton.styleFrom(
-                                                        side: BorderSide(
-                                                          color: Get
+                                                enableDrag: true,
+                                                isDismissible: true,
+                                              );
+                                            },
+                                            onDelete: () {
+                                              Get.defaultDialog(
+                                                title:
+                                                    "delete_song_dialog_title"
+                                                        .tr(),
+                                                content: Text(
+                                                  "delete_song_dialog_content"
+                                                      .tr(),
+                                                ),
+                                                contentPadding: EdgeInsets.all(
+                                                  8,
+                                                ),
+                                                actions: [
+                                                  OutlinedButton(
+                                                    style:
+                                                        OutlinedButton.styleFrom(
+                                                          foregroundColor: Get
                                                               .context!
                                                               .colorScheme
-                                                              .primary,
+                                                              .onSurface,
                                                         ),
-                                                      ),
-                                                  onPressed: () async {
-                                                    logic.deleteSong(
-                                                      logic.songs[index],
-                                                    );
-                                                  },
-                                                  child: Text("confirm".tr()),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                          offset: position,
-                                        );
-                                      },
-                                      isPlaying: true,
-                                    ),
-                                    index == (logic.songs.length - 1) &&
-                                            controller.playingSong.value != null
-                                        ? SizedBox(height: 70)
-                                        : SizedBox.shrink(),
-                                  ],
-                                ),
+                                                    onPressed: () {
+                                                      Get.back();
+                                                    },
+                                                    child: Text("cancel".tr()),
+                                                  ),
+                                                  OutlinedButton(
+                                                    style:
+                                                        OutlinedButton.styleFrom(
+                                                          side: BorderSide(
+                                                            color: Get
+                                                                .context!
+                                                                .colorScheme
+                                                                .primary,
+                                                          ),
+                                                        ),
+                                                    onPressed: () async {
+                                                      logic.deleteSong(
+                                                        logic.songs[index],
+                                                      );
+                                                    },
+                                                    child: Text("confirm".tr()),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                            offset: position,
+                                          );
+                                        },
+                                      ),
+                                      index == (logic.songs.length - 1) &&
+                                              controller.playingSong.value !=
+                                                  null
+                                          ? SizedBox(height: 70)
+                                          : SizedBox.shrink(),
+                                    ],
+                                  );
+                                },
                               ),
                       ),
                       SizedBox(height: 10),

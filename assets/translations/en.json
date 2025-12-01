@@ -49,6 +49,9 @@
   "storage_permission_settings_subtitle": "",
   "permission_already_granted": "",
   "permission_already_granted_desc": "",
+  "last_search": "",
+  "search": "",
+  "": "",
   "": "",
   "": "",
   "msg":"{} are written in the {} language"

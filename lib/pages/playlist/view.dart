@@ -8,6 +8,7 @@ import 'package:one_music/pages/widgets/one_error_widget.dart';
 import 'package:one_music/theme/theme_extensions.dart';
 
 import '../../models/one_song.dart';
+import '../playlist_details/view.dart';
 import '../search/view.dart';
 import '../widgets/one_app_bar.dart';
 import 'logic.dart';
@@ -26,7 +27,7 @@ class PlaylistPage extends StatelessWidget {
           textTwo: "playlists".tr(),
           rightIcon: Icons.search,
           onTap: () {
-            Get.to(() => SearchPage());
+            Get.to(() => SearchPage(coming: runtimeType));
           },
         ),
         SizedBox(height: 10),
@@ -70,7 +71,13 @@ class PlaylistPage extends StatelessWidget {
                         ),
                         itemBuilder: (context, index) {
                           return GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(
+                                () => PlaylistDetailsPage(
+                                  playlist: logic.playlists[index],
+                                ),
+                              );
+                            },
                             onLongPressStart: (details) {
                               PlaylistContextMenu.showPlaylist(
                                 onEditMeta: () {
