@@ -8,6 +8,7 @@ import 'package:one_music/pages/widgets/one_error_widget.dart';
 import 'package:one_music/theme/theme_extensions.dart';
 
 import '../../models/one_song.dart';
+import '../search/view.dart';
 import '../widgets/one_app_bar.dart';
 import 'logic.dart';
 
@@ -24,7 +25,9 @@ class PlaylistPage extends StatelessWidget {
           textOne: "your".tr(),
           textTwo: "playlists".tr(),
           rightIcon: Icons.search,
-          onTap: () {},
+          onTap: () {
+            Get.to(() => SearchPage());
+          },
         ),
         SizedBox(height: 10),
         SingleChildScrollView(

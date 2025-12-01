@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:one_music/controller/one_player_controller.dart';
 import 'package:one_music/models/one_song.dart';
+import 'package:one_music/pages/player/view.dart';
+import 'package:one_music/pages/search/view.dart';
 import 'package:one_music/pages/songs/song_context_menu.dart';
 import 'package:one_music/pages/songs/song_edit_sheet.dart';
 import 'package:one_music/pages/widgets/player_widget.dart';
@@ -27,7 +29,9 @@ class SongsPage extends StatelessWidget {
           textOne: "your".tr(),
           textTwo: "songs".tr(),
           rightIcon: Icons.search,
-          onTap: () {},
+          onTap: () {
+            Get.to(() => SearchPage());
+          },
         ),
         Expanded(
           child: Stack(
@@ -187,7 +191,7 @@ class SongsPage extends StatelessWidget {
                           controller.nextSong();
                         },
                         onTapCard: () {
-                          //TODO open player page
+                          Get.to(() => PlayerPage());
                         },
                       )
                     : SizedBox.shrink(),
