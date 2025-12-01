@@ -76,6 +76,7 @@ class SongsLogic extends GetxController {
         year: meta.year?.year ?? 0,
         artist: meta.artist ?? "",
         title: meta.title ?? "",
+        selected: false,
         trackNumber: meta.trackNumber ?? 0,
         trackTotal: meta.trackTotal ?? 0,
         duration: meta.duration ?? Duration.zero,

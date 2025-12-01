@@ -16,6 +16,7 @@ void main() async {
 
   DbController.songsBox = await Hive.openBox('songs');
   DbController.playlistsBox = await Hive.openBox('playlist');
+  DbController.generalBox = await Hive.openBox('general');
 
   runApp(
     EasyLocalization(

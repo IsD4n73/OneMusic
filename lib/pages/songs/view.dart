@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:one_music/controller/one_player_controller.dart';
+import 'package:one_music/models/one_song.dart';
 import 'package:one_music/pages/songs/song_context_menu.dart';
 import 'package:one_music/pages/songs/song_edit_sheet.dart';
 import 'package:one_music/pages/widgets/player_widget.dart';
@@ -56,10 +57,43 @@ class SongsPage extends StatelessWidget {
                                   children: [
                                     SongTile(
                                       song: logic.songs[index],
-                                      isSelected:
-                                          logic.songs[index].file ==
-                                          controller.playingSong.value?.file,
-                                      onTap: () {},
+                                      isSelected: logic.songs[index].selected,
+                                      onTap: () async {
+                                        if (controller
+                                                .playingSong
+                                                .value
+                                                ?.file ==
+                                            logic.songs[index].file) {
+                                          controller.isPlaying.value =
+                                              !controller.player.playing;
+                                          controller.togglePlaySong();
+                                          return;
+                                        }
+
+                                        List<OneSong> tmpSongs = [];
+
+                                        for (var element in logic.songs) {
+                                          tmpSongs.add(
+                                            element.copyWith(selected: false),
+                                          );
+                                        }
+
+                                        logic.songs.clear();
+                                        logic.songs.addAll(tmpSongs);
+
+                                        logic.songs[index] = logic.songs[index]
+                                            .copyWith(selected: true);
+
+                                        controller.playingSong.value =
+                                            logic.songs[index];
+
+                                        controller.isPlaying.value = true;
+
+                                        await controller.loadPlaylist(
+                                          logic.songs,
+                                          index,
+                                        );
+                                      },
                                       onLongTap: (Offset position) {
                                         SongContextMenu.show(
                                           onEditMeta: () {
@@ -121,7 +155,7 @@ class SongsPage extends StatelessWidget {
                                           offset: position,
                                         );
                                       },
-                                      isPlaying: false,
+                                      isPlaying: true,
                                     ),
                                     index == (logic.songs.length - 1) &&
                                             controller.playingSong.value != null
@@ -140,10 +174,13 @@ class SongsPage extends StatelessWidget {
                 () => controller.playingSong.value != null
                     ? PlayerWidget(
                         song: controller.playingSong.value!,
+                        isPlaying: controller.isPlaying.value,
                         onLeft: () {
                           controller.previousSong();
                         },
                         onPlay: () {
+                          controller.isPlaying.value =
+                              !controller.player.playing;
                           controller.togglePlaySong();
                         },
                         onRight: () {

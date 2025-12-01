@@ -12,8 +12,10 @@ class OneSong {
   final String lyrics;
   final String file;
   final String? picture;
+  final bool selected;
 
   OneSong({
+    required this.selected,
     required this.album,
     required this.year,
     required this.artist,
@@ -45,6 +47,7 @@ class OneSong {
       lyrics: json['lyrics'],
       file: json['file'],
       picture: json['picture'],
+      selected: json['selected'],
     );
   }
 
@@ -63,5 +66,25 @@ class OneSong {
     'lyrics': lyrics,
     'file': file,
     'picture': picture,
+    'selected': selected,
   };
+
+  OneSong copyWith({required bool selected}) {
+    return OneSong(
+      album: album,
+      year: year,
+      artist: artist,
+      title: title,
+      trackNumber: trackNumber,
+      trackTotal: trackTotal,
+      duration: duration,
+      genres: genres,
+      discNumber: discNumber,
+      totalDisc: totalDisc,
+      lyrics: lyrics,
+      file: file,
+      picture: picture,
+      selected: selected,
+    );
+  }
 }

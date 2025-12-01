@@ -89,6 +89,8 @@ class SplashLogic extends GetxController {
     var cleaned = await DbController.songsBox.clear();
     Get.log('Songs Cleaned: $cleaned');
 
+    var noSong = DbController.generalBox.get('getNoSong') ?? false;
+
     await for (final entity in dir.list(recursive: false, followLinks: false)) {
       if (entity is File) {
         final ext = entity.path.toLowerCase();
@@ -99,6 +101,7 @@ class SplashLogic extends GetxController {
 
             var oneSong = OneSong(
               album: meta.album ?? "",
+              selected: false,
               year: meta.year?.year ?? 0,
               artist: meta.artist ?? "",
               title: meta.title ?? "",
@@ -116,6 +119,26 @@ class SplashLogic extends GetxController {
             audioFiles.add(oneSong);
           } catch (e) {
             Get.log('Error reading metadata: $e');
+
+            if (noSong) {
+              var oneSong = OneSong(
+                album: "",
+                year: 0,
+                artist: "",
+                selected: false,
+                title: entity.path.split('/').last,
+                trackNumber: 0,
+                trackTotal: 0,
+                duration: Duration.zero,
+                genres: [],
+                discNumber: 0,
+                totalDisc: 0,
+                lyrics: "",
+                file: entity.path,
+                picture: "",
+              );
+              audioFiles.add(oneSong);
+            }
           }
         }
       }

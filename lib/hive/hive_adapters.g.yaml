@@ -5,7 +5,7 @@ nextTypeId: 2
 types:
   OneSong:
     typeId: 0
-    nextIndex: 13
+    nextIndex: 14
     fields:
       album:
         index: 0
@@ -33,6 +33,8 @@ types:
         index: 11
       picture:
         index: 12
+      selected:
+        index: 13
   OnePlaylist:
     typeId: 1
     nextIndex: 4

@@ -30,7 +30,7 @@ class SongTile extends StatelessWidget {
       child: Card(
         margin: EdgeInsets.all(8),
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: EdgeInsets.all(8),
           child: Row(
             children: [
               song.picture != null

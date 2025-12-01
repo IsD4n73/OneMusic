@@ -10,6 +10,7 @@ class PlayerWidget extends StatelessWidget {
   final void Function()? onRight;
   final void Function()? onTapCard;
   final OneSong song;
+  final bool isPlaying;
   const PlayerWidget({
     super.key,
     this.onLeft,
@@ -17,6 +18,7 @@ class PlayerWidget extends StatelessWidget {
     this.onRight,
     required this.song,
     this.onTapCard,
+    required this.isPlaying,
   });
 
   @override
@@ -52,19 +54,32 @@ class PlayerWidget extends StatelessWidget {
                       height: 50,
                     ),
               SizedBox(width: 5),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(song.title),
-                  Text(song.artist, style: TextStyle(fontSize: 13)),
-                ],
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(song.title, overflow: TextOverflow.ellipsis),
+                    Text(
+                      song.artist,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 13),
+                    ),
+                  ],
+                ),
               ),
               Spacer(),
               InkWell(
                 onTap: onLeft,
                 child: Icon(Icons.keyboard_double_arrow_left, size: 30),
               ),
-              InkWell(onTap: onPlay, child: Icon(Icons.play_arrow, size: 30)),
+              InkWell(
+                onTap: onPlay,
+                child: Icon(
+                  isPlaying ? Icons.pause : Icons.play_arrow,
+                  size: 30,
+                ),
+              ),
               InkWell(
                 onTap: onRight,
                 child: Icon(Icons.keyboard_double_arrow_right, size: 30),

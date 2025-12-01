@@ -117,6 +117,17 @@ class SettingsPage extends StatelessWidget {
                     ),
                   )
                 : SizedBox.shrink(),
+            Platform.isAndroid ? Divider() : SizedBox.shrink(),
+            Obx(
+              () => SwitchListTile(
+                value: logic.getNoSong.value,
+                onChanged: (value) {
+                  logic.changeNoSongSetting(value);
+                },
+                title: Text("get_no_song_settings".tr()),
+                subtitle: Text("get_no_song_settings_subtitle".tr()),
+              ),
+            ),
           ],
         ),
       ),

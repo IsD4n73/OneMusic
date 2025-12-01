@@ -17,6 +17,7 @@ class OneSongAdapter extends TypeAdapter<OneSong> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return OneSong(
+      selected: fields[13] as bool,
       album: fields[0] as String,
       year: (fields[1] as num).toInt(),
       artist: fields[2] as String,
@@ -36,7 +37,7 @@ class OneSongAdapter extends TypeAdapter<OneSong> {
   @override
   void write(BinaryWriter writer, OneSong obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.album)
       ..writeByte(1)
@@ -62,7 +63,9 @@ class OneSongAdapter extends TypeAdapter<OneSong> {
       ..writeByte(11)
       ..write(obj.file)
       ..writeByte(12)
-      ..write(obj.picture);
+      ..write(obj.picture)
+      ..writeByte(13)
+      ..write(obj.selected);
   }
 
   @override

@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../common/db_controller.dart';
+
 class SettingsLogic extends GetxController with WidgetsBindingObserver {
   RxBool backgroundPermission = true.obs;
   RxBool storagePermission = true.obs;
+  RxBool getNoSong = false.obs;
 
   void getPermissions() async {
     bool? isBatteryOptimizationDisabled =
@@ -14,6 +17,13 @@ class SettingsLogic extends GetxController with WidgetsBindingObserver {
 
     var manageStatus = await Permission.manageExternalStorage.isGranted;
     storagePermission.value = manageStatus;
+
+    getNoSong.value = DbController.generalBox.get('getNoSong') ?? false;
+  }
+
+  void changeNoSongSetting(bool value) {
+    DbController.generalBox.put('getNoSong', value);
+    getNoSong.value = value;
   }
 
   void backgroundPermissionChange() async {
