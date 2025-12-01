@@ -71,7 +71,7 @@ class PlayerWidget extends StatelessWidget {
               Spacer(),
               InkWell(
                 onTap: onLeft,
-                child: Icon(Icons.keyboard_double_arrow_left, size: 30),
+                child: Icon(Icons.skip_previous, size: 30),
               ),
               InkWell(
                 onTap: onPlay,
@@ -80,10 +80,7 @@ class PlayerWidget extends StatelessWidget {
                   size: 30,
                 ),
               ),
-              InkWell(
-                onTap: onRight,
-                child: Icon(Icons.keyboard_double_arrow_right, size: 30),
-              ),
+              InkWell(onTap: onRight, child: Icon(Icons.skip_next, size: 30)),
             ],
           ),
         ),

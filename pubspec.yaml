@@ -36,6 +36,7 @@ dependencies:
   just_audio: ^0.10.5
   audio_metadata_reader: ^1.4.2
   mini_music_visualizer: ^1.1.4
+  audio_video_progress_bar: ^2.0.3
 
   persistent_bottom_nav_bar_v2: ^6.2.0
   toastification: ^3.0.3
