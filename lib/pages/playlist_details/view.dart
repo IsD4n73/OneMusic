@@ -102,16 +102,22 @@ class PlaylistDetailsPage extends StatelessWidget {
                       ? PlayerWidget(
                           song: controller.playingSong.value!,
                           isPlaying: controller.isPlaying.value,
-                          onLeft: () {
-                            controller.previousSong();
+                          onLeft: () async {
+                            var updatedSongs = await controller.previousSong(
+                              logic.songs,
+                            );
+                            logic.songs.value = updatedSongs;
                           },
                           onPlay: () {
                             controller.isPlaying.value =
                                 !controller.player.playing;
                             controller.togglePlaySong();
                           },
-                          onRight: () {
-                            controller.nextSong();
+                          onRight: () async {
+                            var updatedSongs = await controller.nextSong(
+                              logic.songs,
+                            );
+                            logic.songs.value = updatedSongs;
                           },
                           onTapCard: () {
                             Get.to(() => PlayerPage());

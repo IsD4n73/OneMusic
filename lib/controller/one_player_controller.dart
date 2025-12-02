@@ -24,6 +24,7 @@ class OnePlayerController extends GetxController {
                   album: e.album,
                   artist: e.artist,
                   duration: e.duration,
+                  extras: {"onesong": e},
                 ),
               ),
             )
@@ -37,18 +38,63 @@ class OnePlayerController extends GetxController {
     }
   }
 
-  void nextSong() {
-    player.seekToNext();
+  Future<List<OneSong>> nextSong(List<OneSong> songs) async {
+    await player.seekToNext();
+
+    var source =
+        player.audioSources[player.currentIndex ?? 0] as ProgressiveAudioSource;
+    var mediaItem = source.tag as MediaItem;
+    var song = mediaItem.extras?["onesong"] as OneSong;
+
+    playingSong.value = song;
+
+    Get.log("now playing: ${song.file}");
+    return _refreshSongs(songs);
   }
 
-  void previousSong() {
-    player.seekToPrevious();
+  Future<List<OneSong>> previousSong(List<OneSong> songs) async {
+    await player.seekToPrevious();
+
+    var source =
+        player.audioSources[player.currentIndex ?? 0] as ProgressiveAudioSource;
+    var mediaItem = source.tag as MediaItem;
+    var song = mediaItem.extras?["onesong"] as OneSong;
+
+    playingSong.value = song;
+
+    Get.log("now playing: ${playingSong.value?.file}");
+    return _refreshSongs(songs);
   }
 
   void togglePlaySong() async {
     Get.log("togglePlaySong, playing: ${player.playing}");
     isPlaying.value = !player.playing;
     player.playing ? player.pause() : player.play();
+  }
+
+  List<OneSong> getPlayerSource() {
+    return player.audioSources.map((e) {
+      var source = player.audioSource as ProgressiveAudioSource;
+      var mediaItem = source.tag as MediaItem;
+      var song = mediaItem.extras?["onesong"] as OneSong;
+
+      return song;
+    }).toList();
+  }
+
+  List<OneSong> _refreshSongs(List<OneSong> songs) {
+    List<OneSong> tmpSongs = [];
+
+    for (var element in songs) {
+      tmpSongs.add(element.copyWith(selected: false));
+    }
+
+    var index = tmpSongs.indexWhere(
+      (element) => playingSong.value?.file == element.file,
+    );
+    tmpSongs[index] = tmpSongs[index].copyWith(selected: true);
+
+    return tmpSongs;
   }
 
   @override
