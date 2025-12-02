@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:discord_rich_presence/discord_rich_presence.dart';
@@ -29,6 +30,9 @@ class OnePlayerController extends GetxController {
                   id: e.file,
                   title: e.title,
                   album: e.album,
+                  artUri: e.picture == null
+                      ? null
+                      : Uri.dataFromBytes(base64Decode(e.picture!)),
                   artist: e.artist,
                   duration: e.duration,
                   extras: {"onesong": e},
