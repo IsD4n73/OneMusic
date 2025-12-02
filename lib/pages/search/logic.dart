@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:one_music/models/one_playlist.dart';
 import 'package:one_music/pages/songs/view.dart';
-
 import '../../common/db_controller.dart';
 import '../../models/one_song.dart';
 

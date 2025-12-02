@@ -73,7 +73,7 @@ class PlayerPage extends StatelessWidget {
                   IconButton(
                     onPressed: () async {
                       var songs = controller.getPlayerSource();
-                      var updatedSongs = await controller.previousSong(songs);
+                      await controller.previousSong(songs);
                     },
                     icon: Icon(Icons.skip_previous),
                     style: IconButton.styleFrom(iconSize: 50),
@@ -95,7 +95,7 @@ class PlayerPage extends StatelessWidget {
                   IconButton(
                     onPressed: () async {
                       var songs = controller.getPlayerSource();
-                      var updatedSongs = await controller.nextSong(songs);
+                      await controller.nextSong(songs);
                     },
                     icon: Icon(Icons.skip_next),
                     style: IconButton.styleFrom(iconSize: 50),
