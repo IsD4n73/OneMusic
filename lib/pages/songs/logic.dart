@@ -155,6 +155,8 @@ class SongsLogic extends GetxController {
     songs.value = List<OneSong>.from(DbController.songsBox.values);
 
     Future.delayed(Duration.zero, () async {
+      if (Platform.isWindows) return;
+
       bool? isBatteryOptimizationDisabled =
           await DisableBatteryOptimization.isBatteryOptimizationDisabled;
       if (!(isBatteryOptimizationDisabled ?? true)) {

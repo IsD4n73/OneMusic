@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:disable_battery_optimization/disable_battery_optimization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,9 +13,11 @@ class SettingsLogic extends GetxController with WidgetsBindingObserver {
   RxBool getNoSong = false.obs;
 
   void getPermissions() async {
-    bool? isBatteryOptimizationDisabled =
-        await DisableBatteryOptimization.isBatteryOptimizationDisabled;
-    backgroundPermission.value = isBatteryOptimizationDisabled ?? true;
+    if (Platform.isAndroid) {
+      bool? isBatteryOptimizationDisabled =
+          await DisableBatteryOptimization.isBatteryOptimizationDisabled;
+      backgroundPermission.value = isBatteryOptimizationDisabled ?? true;
+    }
 
     var manageStatus = await Permission.manageExternalStorage.isGranted;
     storagePermission.value = manageStatus;
