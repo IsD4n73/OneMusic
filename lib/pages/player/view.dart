@@ -60,6 +60,7 @@ class PlayerPage extends StatelessWidget {
                       timeLabelLocation: TimeLabelLocation.above,
                       onSeek: (duration) {
                         Get.log('User selected a new time: $duration');
+                        controller.player.seek(duration);
                       },
                     );
                   },

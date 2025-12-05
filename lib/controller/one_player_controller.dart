@@ -27,7 +27,7 @@ class OnePlayerController extends GetxController {
               (e) => AudioSource.file(
                 e.file,
                 tag: MediaItem(
-                  id: e.file,
+                  id: e.hashCode.toString(),
                   title: e.title,
                   album: e.album,
                   artUri: e.picture == null
@@ -35,6 +35,8 @@ class OnePlayerController extends GetxController {
                       : Uri.dataFromBytes(base64Decode(e.picture!)),
                   artist: e.artist,
                   duration: e.duration,
+                  displayTitle: e.title,
+                  displaySubtitle: e.artist,
                   extras: {"onesong": e},
                 ),
               ),
@@ -139,6 +141,20 @@ class OnePlayerController extends GetxController {
     if (Platform.isWindows) {
       richClient.connect();
     }
+
+    player.playbackEventStream.listen((event) {
+      var currentIndex = event.currentIndex ?? 0;
+
+      if (player.audioSources.isEmpty) return;
+
+      var source = player.audioSources[currentIndex] as ProgressiveAudioSource;
+      var mediaItem = source.tag as MediaItem;
+      var song = mediaItem.extras?["onesong"] as OneSong;
+
+      playingSong.value = song;
+
+      Get.log("now playing: ${playingSong.value?.file}");
+    });
 
     player.playerStateStream.listen((event) {
       Get.log("playerStateStream, playing: ${event.playing}");
