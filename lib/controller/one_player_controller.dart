@@ -30,9 +30,9 @@ class OnePlayerController extends GetxController {
                   id: e.hashCode.toString(),
                   title: e.title,
                   album: e.album,
-                  artUri: e.picture == null
+                  /*artUri: e.picture == null
                       ? null
-                      : Uri.dataFromBytes(base64Decode(e.picture!)),
+                      : Uri.dataFromBytes(base64Decode(e.picture!)),*/
                   artist: e.artist,
                   duration: e.duration,
                   displayTitle: e.title,
