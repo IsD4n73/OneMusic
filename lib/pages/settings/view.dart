@@ -128,6 +128,19 @@ class SettingsPage extends StatelessWidget {
                 subtitle: Text("get_no_song_settings_subtitle".tr()),
               ),
             ),
+            Platform.isWindows ? Divider() : SizedBox.shrink(),
+            Platform.isWindows
+                ? Obx(
+                    () => SwitchListTile(
+                      value: logic.richPresence.value,
+                      onChanged: (value) {
+                        logic.changeRichSetting(value);
+                      },
+                      title: Text("rich_presence_settings".tr()),
+                      subtitle: Text("rich_presence_settings_subtitle".tr()),
+                    ),
+                  )
+                : SizedBox.shrink(),
           ],
         ),
       ),
