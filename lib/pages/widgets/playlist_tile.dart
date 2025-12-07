@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:one_music/models/one_playlist.dart';
+import 'package:one_music/pages/widgets/one_image.dart';
 
 class PlaylistTile extends StatelessWidget {
   final OnePlaylist playlist;
@@ -20,22 +21,7 @@ class PlaylistTile extends StatelessWidget {
           padding: EdgeInsets.all(8),
           child: Row(
             children: [
-              playlist.picture != null
-                  ? Image.memory(
-                      base64Decode(playlist.picture!),
-                      width: 50,
-                      height: 50,
-                      errorBuilder: (context, error, stackTrace) => Image.asset(
-                        "assets/images/icon.png",
-                        width: 50,
-                        height: 50,
-                      ),
-                    )
-                  : Image.asset(
-                      "assets/images/icon.png",
-                      width: 50,
-                      height: 50,
-                    ),
+              OneImage(picture: playlist.picture, size: OneImageSize.small),
               SizedBox(width: 10),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.6,

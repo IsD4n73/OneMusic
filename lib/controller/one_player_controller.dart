@@ -23,26 +23,24 @@ class OnePlayerController extends GetxController {
       Get.log("loadPlaylist, clearing");
 
       await player.setAudioSources(
-        songs
-            .map(
-              (e) => AudioSource.file(
-                e.file,
-                tag: MediaItem(
-                  id: e.hashCode.toString(),
-                  title: e.title,
-                  album: e.album,
-                  /*artUri: e.picture == null
+        songs.map((e) {
+          var media = MediaItem(
+            id: e.hashCode.toString(),
+            title: e.title,
+            album: e.album,
+            /*artUri: e.picture == null
                       ? null
                       : Uri.dataFromBytes(base64Decode(e.picture!)),*/
-                  artist: e.artist,
-                  duration: e.duration,
-                  displayTitle: e.title,
-                  displaySubtitle: e.artist,
-                  extras: {"onesong": e},
-                ),
-              ),
-            )
-            .toList(),
+            artist: e.artist,
+            duration: e.duration,
+            displayTitle: e.title,
+            displaySubtitle: e.artist,
+            extras: {"onesong": e},
+          );
+          return e.file.startsWith("http")
+              ? AudioSource.uri(Uri.parse(e.file), tag: media)
+              : AudioSource.file(e.file, tag: media);
+        }).toList(),
         initialIndex: index,
       );
 

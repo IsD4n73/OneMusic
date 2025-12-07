@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -13,11 +14,14 @@ void main() async {
 
   await dotenv.load(fileName: ".env");
   await EasyLocalization.ensureInitialized();
-  await JustAudioBackground.init(
-    androidNotificationChannelId: 'it.d4n73.onemusic.channel.audio',
-    androidNotificationChannelName: 'Audio playback',
-    androidNotificationOngoing: true,
-  );
+
+  if (Platform.isAndroid) {
+    await JustAudioBackground.init(
+      androidNotificationChannelId: 'it.d4n73.onemusic.channel.audio',
+      androidNotificationChannelName: 'Audio playback',
+      androidNotificationOngoing: true,
+    );
+  }
 
   await Hive.initFlutter();
 

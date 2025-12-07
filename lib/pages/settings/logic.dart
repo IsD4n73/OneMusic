@@ -12,6 +12,7 @@ class SettingsLogic extends GetxController with WidgetsBindingObserver {
   RxBool storagePermission = true.obs;
   RxBool getNoSong = false.obs;
   RxBool richPresence = false.obs;
+  RxBool searchOnline = false.obs;
 
   void getPermissions() async {
     if (Platform.isAndroid) {
@@ -34,6 +35,11 @@ class SettingsLogic extends GetxController with WidgetsBindingObserver {
   void changeRichSetting(bool value) {
     DbController.generalBox.put('showRichPresence', value);
     richPresence.value = value;
+  }
+
+  void changeSearchOnlineSetting(bool value) {
+    DbController.generalBox.put('searchOnline', value);
+    searchOnline.value = value;
   }
 
   void backgroundPermissionChange() async {

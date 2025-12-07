@@ -38,7 +38,10 @@ class SearchPage extends StatelessWidget {
               SizedBox(height: 20),
               TextField(
                 controller: logic.searchController,
-                onChanged: (value) => logic.search(value, coming),
+                onChanged: (value) {
+                  logic.search(value, coming);
+                  ytController.search(value, coming != SongsPage);
+                },
                 decoration: InputDecoration(
                   labelText: "search".tr(),
                   hintText: "search".tr(),
@@ -47,12 +50,92 @@ class SearchPage extends StatelessWidget {
               ),
               Divider(),
               Obx(
-                () => (coming == SongsPage && logic.songs.isEmpty)
+                () =>
+                    ytController.searchResults.isEmpty &&
+                        ytController.playlistResult.isEmpty
+                    ? SizedBox.shrink()
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.zero,
+                        itemCount: coming == SongsPage
+                            ? ytController.searchResults.length
+                            : ytController.playlistResult.length,
+                        itemBuilder: (context, index) {
+                          if (coming == SongsPage) {
+                            return SongTile(
+                              song: ytController.searchResults[index],
+                              onTap: () async {
+                                if (controller.playingSong.value?.file ==
+                                    ytController.searchResults[index].file) {
+                                  controller.isPlaying.value =
+                                      !controller.player.playing;
+                                  controller.togglePlaySong();
+                                  return;
+                                }
+
+                                List<OneSong> tmpSongs = [];
+
+                                for (var element
+                                    in ytController.searchResults) {
+                                  tmpSongs.add(
+                                    element.copyWith(selected: false),
+                                  );
+                                }
+
+                                ytController.searchResults.clear();
+                                ytController.searchResults.addAll(tmpSongs);
+
+                                ytController.searchResults[index] = ytController
+                                    .searchResults[index]
+                                    .copyWith(selected: true);
+
+                                controller.playingSong.value =
+                                    ytController.searchResults[index];
+
+                                controller.isPlaying.value = true;
+
+                                await controller.loadPlaylist(
+                                  ytController.searchResults,
+                                  index,
+                                );
+                              },
+                              isPlaying: true,
+                              isSelected:
+                                  controller.playingSong.value?.file ==
+                                  ytController.searchResults[index].file,
+                              onLongTap: (position) {},
+                            );
+                          }
+                          return PlaylistTile(
+                            playlist: ytController.playlistResult[index],
+                            onTap: () {
+                              Get.to(
+                                () => PlaylistDetailsPage(
+                                  playlist: ytController.playlistResult[index],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+              ),
+              Obx(
+                () =>
+                    ytController.searchResults.isEmpty &&
+                        ytController.playlistResult.isEmpty &&
+                        (coming == SongsPage && logic.songs.isEmpty)
                     ? OneErrorWidget(error: "no_songs_found")
-                    : (coming == PlaylistPage && logic.playlist.isEmpty)
+                    : ytController.searchResults.isEmpty &&
+                          ytController.playlistResult.isEmpty &&
+                          (coming == PlaylistPage && logic.playlist.isEmpty)
                     ? OneErrorWidget(error: "no_playlists_found")
                     : SizedBox.shrink(),
               ),
+              ytController.searchResults.isEmpty &&
+                      ytController.playlistResult.isEmpty
+                  ? SizedBox.shrink()
+                  : Divider(),
               Obx(
                 () => ListView.builder(
                   shrinkWrap: true,

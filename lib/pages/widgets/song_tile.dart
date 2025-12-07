@@ -1,10 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:mini_music_visualizer/mini_music_visualizer.dart';
 import 'package:one_music/common/formatter.dart';
 import 'package:one_music/models/one_song.dart';
 import 'package:one_music/theme/theme_extensions.dart';
+
+import 'one_image.dart';
 
 class SongTile extends StatelessWidget {
   final OneSong song;
@@ -33,22 +33,7 @@ class SongTile extends StatelessWidget {
           padding: EdgeInsets.all(8),
           child: Row(
             children: [
-              song.picture != null
-                  ? Image.memory(
-                      base64Decode(song.picture!),
-                      width: 50,
-                      height: 50,
-                      errorBuilder: (context, error, stackTrace) => Image.asset(
-                        "assets/images/icon.png",
-                        width: 50,
-                        height: 50,
-                      ),
-                    )
-                  : Image.asset(
-                      "assets/images/icon.png",
-                      width: 50,
-                      height: 50,
-                    ),
+              OneImage(picture: song.picture, size: OneImageSize.small),
               SizedBox(width: 10),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.6,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:one_music/theme/theme_extensions.dart';
 
 class OneAppBar extends StatelessWidget {
@@ -21,6 +22,12 @@ class OneAppBar extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: Row(
           children: [
+            Navigator.of(context).canPop()
+                ? IconButton(
+                    onPressed: () => Get.back(),
+                    icon: Icon(Icons.arrow_back_ios_new),
+                  )
+                : SizedBox.shrink(),
             textOne != null && textTwo != null
                 ? Row(
                     children: [

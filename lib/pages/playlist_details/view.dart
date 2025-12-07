@@ -10,6 +10,7 @@ import 'package:one_music/pages/widgets/song_tile.dart';
 import '../../controller/one_player_controller.dart';
 import '../player/view.dart';
 import '../widgets/one_app_bar.dart';
+import '../widgets/one_image.dart';
 import '../widgets/player_widget.dart';
 import 'logic.dart';
 
@@ -33,13 +34,7 @@ class PlaylistDetailsPage extends StatelessWidget {
           ),
 
           SizedBox(height: 20),
-          playlist.picture != null
-              ? Image.memory(
-                  base64Decode(playlist.picture!),
-                  width: 150,
-                  height: 150,
-                )
-              : Image.asset("assets/images/icon.png", width: 150, height: 150),
+          OneImage(picture: playlist.picture, size: OneImageSize.medium),
           SizedBox(height: 20),
           Text(
             playlist.name,

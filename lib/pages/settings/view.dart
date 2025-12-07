@@ -72,6 +72,17 @@ class SettingsPage extends StatelessWidget {
               subtitle: "general_settings_subtitle",
             ),
             SizedBox(height: 20),
+            Obx(
+              () => SwitchListTile(
+                value: logic.searchOnline.value,
+                onChanged: (value) {
+                  logic.changeSearchOnlineSetting(value);
+                },
+                title: Text("search_online_settings".tr()),
+                subtitle: Text("search_online_settings_subtitle".tr()),
+              ),
+            ),
+            Divider(),
             Platform.isAndroid
                 ? Obx(
                     () => SwitchListTile(

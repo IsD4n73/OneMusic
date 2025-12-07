@@ -4,6 +4,7 @@ import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
+import 'package:one_music/pages/widgets/one_image.dart';
 
 import '../../controller/one_player_controller.dart';
 import 'logic.dart';
@@ -23,18 +24,10 @@ class PlayerPage extends StatelessWidget {
           () => Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              controller.playingSong.value != null &&
-                      controller.playingSong.value?.picture != null
-                  ? Image.memory(
-                      base64Decode(controller.playingSong.value!.picture!),
-                      height: 300,
-                      width: 300,
-                    )
-                  : Image.asset(
-                      "assets/images/icon.png",
-                      width: 150,
-                      height: 150,
-                    ),
+              OneImage(
+                picture: controller.playingSong.value!.picture!,
+                size: OneImageSize.big,
+              ),
               SizedBox(height: 10),
               Text(
                 controller.playingSong.value?.title ?? "not_playing".tr(),

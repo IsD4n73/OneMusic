@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:one_music/models/one_song.dart';
+import 'package:one_music/pages/widgets/one_image.dart';
 import 'package:one_music/theme/theme_extensions.dart';
 
 class PlayerWidget extends StatelessWidget {
@@ -37,22 +38,7 @@ class PlayerWidget extends StatelessWidget {
           ),
           child: Row(
             children: [
-              song.picture != null
-                  ? Image.memory(
-                      base64Decode(song.picture!),
-                      width: 50,
-                      height: 50,
-                      errorBuilder: (context, error, stackTrace) => Image.asset(
-                        "assets/images/icon.png",
-                        width: 50,
-                        height: 50,
-                      ),
-                    )
-                  : Image.asset(
-                      "assets/images/icon.png",
-                      width: 50,
-                      height: 50,
-                    ),
+              OneImage(picture: song.picture, size: OneImageSize.medium),
               SizedBox(width: 5),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5,
