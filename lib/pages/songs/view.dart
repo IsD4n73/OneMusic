@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:one_music/controller/one_player_controller.dart';
+import 'package:one_music/controller/yt_player_controller.dart';
 import 'package:one_music/models/one_song.dart';
 import 'package:one_music/pages/player/view.dart';
 import 'package:one_music/pages/search/view.dart';
@@ -20,6 +21,7 @@ class SongsPage extends StatelessWidget {
 
   final SongsLogic logic = Get.put(SongsLogic());
   final OnePlayerController controller = Get.put(OnePlayerController());
+  final YtPlayerController ytController = Get.put(YtPlayerController());
 
   @override
   Widget build(BuildContext context) {

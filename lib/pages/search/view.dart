@@ -8,6 +8,7 @@ import 'package:one_music/pages/widgets/one_error_widget.dart';
 import 'package:one_music/pages/widgets/playlist_tile.dart';
 import 'package:one_music/pages/widgets/song_tile.dart';
 import '../../controller/one_player_controller.dart';
+import '../../controller/yt_player_controller.dart';
 import '../../models/one_song.dart';
 import '../playlist_details/view.dart';
 import 'logic.dart';
@@ -18,6 +19,7 @@ class SearchPage extends StatelessWidget {
 
   final SearchLogic logic = Get.put(SearchLogic());
   final OnePlayerController controller = Get.find();
+  final YtPlayerController ytController = Get.find();
 
   @override
   Widget build(BuildContext context) {

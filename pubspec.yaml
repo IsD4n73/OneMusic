@@ -38,10 +38,11 @@ dependencies:
   audio_metadata_reader: ^1.4.2
   mini_music_visualizer: ^1.1.4
   audio_video_progress_bar: ^2.0.3
+  youtube_explode_dart: ^3.0.5
 
   persistent_bottom_nav_bar_v2: ^6.2.0
   toastification: ^3.0.3
-  flutter_context_menu: ^0.4.0
+  flutter_context_menu: ^0.4.1
 
   get: ^4.7.3
   hive_ce: ^2.15.1
@@ -63,7 +64,7 @@ dependencies:
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
-  hive_ce_generator: ^1.10.0
+  hive_ce_generator: ^1.10.1
   build_runner: ^2.10.4
 
 

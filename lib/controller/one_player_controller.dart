@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:discord_rich_presence/discord_rich_presence.dart';
@@ -23,7 +22,7 @@ class OnePlayerController extends GetxController {
       await player.clearAudioSources();
       Get.log("loadPlaylist, clearing");
 
-      /*await player.setAudioSources(
+      await player.setAudioSources(
         songs
             .map(
               (e) => AudioSource.file(
@@ -45,29 +44,7 @@ class OnePlayerController extends GetxController {
             )
             .toList(),
         initialIndex: index,
-      );*/
-
-      final playlist = ConcatenatingAudioSource(
-        children: songs
-            .map(
-              (e) => AudioSource.file(
-                e.file,
-                tag: MediaItem(
-                  id: e.hashCode.toString(),
-                  title: e.title,
-                  album: e.album,
-                  artist: e.artist,
-                  duration: e.duration,
-                  displayTitle: e.title,
-                  displaySubtitle: e.artist,
-                  extras: {"onesong": e},
-                ),
-              ),
-            )
-            .toList(),
       );
-
-      await player.setAudioSource(playlist, initialIndex: index);
 
       _setRichPresence(songs[index]);
 
@@ -143,8 +120,12 @@ class OnePlayerController extends GetxController {
 
   void _setRichPresence(OneSong song) {
     if (Platform.isWindows) {
-      if (!DbController.generalBox.get("showRichPresence", defaultValue: false))
+      if (!DbController.generalBox.get(
+        "showRichPresence",
+        defaultValue: false,
+      )) {
         return;
+      }
       Get.log("setRichPresence for ${song.title}");
       richClient.setActivity(
         Activity(
@@ -164,7 +145,8 @@ class OnePlayerController extends GetxController {
   void onInit() {
     super.onInit();
 
-    if (Platform.isWindows) {
+    if (Platform.isWindows &&
+        DbController.generalBox.get("showRichPresence", defaultValue: false)) {
       richClient.connect();
     }
 
