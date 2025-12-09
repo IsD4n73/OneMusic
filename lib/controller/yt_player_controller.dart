@@ -12,7 +12,6 @@ class YtPlayerController extends GetxController {
 
   Timer? _debounce;
 
-  RxList<OnePlaylist> playlistResult = RxList<OnePlaylist>([]);
   RxList<OneSong> searchResults = RxList<OneSong>([]);
 
   void search(String query, bool searchPlaylist) {

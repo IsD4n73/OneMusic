@@ -36,7 +36,7 @@ class PlayerWidget extends StatelessWidget {
           ),
           child: Row(
             children: [
-              OneImage(picture: song.picture, size: OneImageSize.medium),
+              OneImage(picture: song.picture, size: OneImageSize.small),
               SizedBox(width: 5),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5,
