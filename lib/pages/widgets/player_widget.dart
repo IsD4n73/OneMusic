@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:one_music/models/one_song.dart';
 import 'package:one_music/pages/widgets/one_image.dart';

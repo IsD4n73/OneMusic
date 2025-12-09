@@ -24,7 +24,18 @@ class SettingsLogic extends GetxController with WidgetsBindingObserver {
     var manageStatus = await Permission.manageExternalStorage.isGranted;
     storagePermission.value = manageStatus;
 
-    getNoSong.value = DbController.generalBox.get('getNoSong') ?? false;
+    getNoSong.value = DbController.generalBox.get(
+      'getNoSong',
+      defaultValue: false,
+    );
+    richPresence.value = DbController.generalBox.get(
+      'showRichPresence',
+      defaultValue: false,
+    );
+    searchOnline.value = DbController.generalBox.get(
+      'searchOnline',
+      defaultValue: false,
+    );
   }
 
   void changeNoSongSetting(bool value) {
