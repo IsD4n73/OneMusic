@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:one_music/common/db_controller.dart';
-import 'package:one_music/models/one_playlist.dart';
 import 'package:one_music/models/one_song.dart';
 
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
@@ -29,7 +28,7 @@ class YtPlayerController extends GetxController {
       for (var vid in results) {
         var manifest = await yt.videos.streamsClient.getManifest(vid.id);
 
-        var streamInfo = manifest.audioOnly.withHighestBitrate();
+        var streamInfo = manifest.audio.withHighestBitrate();
         var url = streamInfo.url.toString();
 
         var song = OneSong(

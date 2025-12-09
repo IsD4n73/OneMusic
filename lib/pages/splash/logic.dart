@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:disable_battery_optimization/disable_battery_optimization.dart';
 import 'package:get/get.dart';
 import 'package:one_music/common/app_toast.dart';
@@ -19,9 +18,6 @@ class SplashLogic extends GetxController {
   Future<Directory?> _getMusicDirectory() async {
     // ANDROID
     if (Platform.isAndroid) {
-      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-
       bool? isBatteryOptimizationDisabled =
           await DisableBatteryOptimization.isBatteryOptimizationDisabled;
       if (!(isBatteryOptimizationDisabled ?? true)) {
@@ -36,21 +32,6 @@ class SplashLogic extends GetxController {
           "permission_denied",
           "permission_denied_manage_desc",
         );
-      }
-
-      var permissionGranted = false;
-      if (androidInfo.version.sdkInt < 22) {
-        var status = await Permission.storage.request();
-        permissionGranted = status.isGranted;
-      } else {
-        // Android 13+ (audio)
-        var status = await Permission.audio.request();
-        permissionGranted = status.isGranted;
-      }
-
-      if (!permissionGranted) {
-        AppToast.showToast("permission_denied", "permission_denied_desc");
-        return null;
       }
 
       await Permission.notification.request();

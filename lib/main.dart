@@ -12,9 +12,6 @@ import 'app.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await dotenv.load(fileName: ".env");
-  await EasyLocalization.ensureInitialized();
-
   if (Platform.isAndroid) {
     await JustAudioBackground.init(
       androidNotificationChannelId: 'it.d4n73.onemusic.channel.audio',
@@ -22,6 +19,9 @@ void main() async {
       androidNotificationOngoing: true,
     );
   }
+
+  await dotenv.load(fileName: ".env");
+  await EasyLocalization.ensureInitialized();
 
   await Hive.initFlutter();
 

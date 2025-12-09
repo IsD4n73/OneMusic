@@ -28,14 +28,16 @@ class OnePlayerController extends GetxController {
             id: e.hashCode.toString(),
             title: e.title,
             album: e.album,
-            /*artUri: e.picture == null
-                      ? null
-                      : Uri.dataFromBytes(base64Decode(e.picture!)),*/
+            artUri: e.picture != null && e.file.startsWith("http")
+                ? Uri.parse(e.picture!)
+                : Uri.parse(
+                    "https://raw.githubusercontent.com/IsD4n73/OneMusic/refs/heads/main/assets/images/icon.png",
+                  ),
             artist: e.artist,
             duration: e.duration,
             displayTitle: e.title,
             displaySubtitle: e.artist,
-            extras: {"onesong": e},
+            extras: {"onesong": e.toJson()},
           );
           return e.file.startsWith("http")
               ? AudioSource.uri(Uri.parse(e.file), tag: media)
@@ -59,7 +61,8 @@ class OnePlayerController extends GetxController {
     var source =
         player.audioSources[player.currentIndex ?? 0] as ProgressiveAudioSource;
     var mediaItem = source.tag as MediaItem;
-    var song = mediaItem.extras?["onesong"] as OneSong;
+    var songjson = mediaItem.extras?["onesong"] as Map<String, dynamic>;
+    var song = OneSong.fromJson(songjson);
 
     _setRichPresence(song);
 
@@ -75,7 +78,8 @@ class OnePlayerController extends GetxController {
     var source =
         player.audioSources[player.currentIndex ?? 0] as ProgressiveAudioSource;
     var mediaItem = source.tag as MediaItem;
-    var song = mediaItem.extras?["onesong"] as OneSong;
+    var songjson = mediaItem.extras?["onesong"] as Map<String, dynamic>;
+    var song = OneSong.fromJson(songjson);
 
     _setRichPresence(song);
 
@@ -95,7 +99,8 @@ class OnePlayerController extends GetxController {
     return player.audioSources.map((e) {
       var source = player.audioSource as ProgressiveAudioSource;
       var mediaItem = source.tag as MediaItem;
-      var song = mediaItem.extras?["onesong"] as OneSong;
+      var songjson = mediaItem.extras?["onesong"] as Map<String, dynamic>;
+      var song = OneSong.fromJson(songjson);
 
       return song;
     }).toList();
@@ -155,7 +160,8 @@ class OnePlayerController extends GetxController {
 
       var source = player.audioSources[currentIndex] as ProgressiveAudioSource;
       var mediaItem = source.tag as MediaItem;
-      var song = mediaItem.extras?["onesong"] as OneSong;
+      var songjson = mediaItem.extras?["onesong"] as Map<String, dynamic>;
+      var song = OneSong.fromJson(songjson);
 
       playingSong.value = song;
 
