@@ -34,8 +34,6 @@ class SplashLogic extends GetxController {
         );
       }
 
-      await Permission.notification.request();
-
       return Directory('/storage/emulated/0/Music');
     }
 
