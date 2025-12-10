@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:audiotags/audiotags.dart';
 import 'package:disable_battery_optimization/disable_battery_optimization.dart';
-import 'package:flutter_media_metadata_new/flutter_media_metadata_new.dart';
 import 'package:get/get.dart';
 import 'package:one_music/common/app_toast.dart';
 import 'package:one_music/common/db_controller.dart';
@@ -104,28 +104,24 @@ class SplashLogic extends GetxController {
             Get.log('| try second method | Error reading metadata: $e ');
 
             try {
-              final fileMetadata = await FlutterMediaMetadataNew.getMetadata(
-                entity.path,
-              );
+              final fileMetadata = await AudioTags.read(entity.path);
 
               var oneSong = OneSong(
                 onlineId: "",
-                album: fileMetadata.albumName ?? "",
+                album: fileMetadata?.album ?? "",
                 selected: false,
-                year: fileMetadata.year ?? 0,
-                artist: fileMetadata.writerName ?? "",
-                title: fileMetadata.trackName ?? "",
-                trackNumber: fileMetadata.trackNumber ?? 0,
+                year: fileMetadata?.year ?? 0,
+                artist: fileMetadata?.trackArtist ?? "",
+                title: fileMetadata?.title ?? "",
+                trackNumber: fileMetadata?.trackNumber ?? 0,
                 trackTotal: 0,
-                duration: Duration(
-                  milliseconds: fileMetadata.trackDuration ?? 0,
-                ),
-                genres: [fileMetadata.genre ?? ""],
-                discNumber: fileMetadata.discNumber ?? 0,
+                duration: Duration(milliseconds: fileMetadata?.duration ?? 0),
+                genres: [fileMetadata?.genre ?? ""],
+                discNumber: fileMetadata?.discNumber ?? 0,
                 totalDisc: 0,
                 lyrics: "",
                 file: entity.path,
-                picture: base64Encode(fileMetadata.albumArt ?? []),
+                picture: base64Encode(fileMetadata?.pictures.first.bytes ?? []),
               );
 
               audioFiles.add(oneSong);
