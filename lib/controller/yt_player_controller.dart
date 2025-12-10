@@ -32,6 +32,7 @@ class YtPlayerController extends GetxController {
         var url = streamInfo.url.toString();
 
         var song = OneSong(
+          onlineId: vid.id.value,
           selected: false,
           album: "yt",
           year: vid.uploadDate?.year ?? 0,

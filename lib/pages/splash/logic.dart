@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:disable_battery_optimization/disable_battery_optimization.dart';
+import 'package:flutter_media_metadata_new/flutter_media_metadata_new.dart';
 import 'package:get/get.dart';
 import 'package:one_music/common/app_toast.dart';
 import 'package:one_music/common/db_controller.dart';
@@ -81,6 +82,7 @@ class SplashLogic extends GetxController {
             var meta = readMetadata(entity, getImage: true);
 
             var oneSong = OneSong(
+              onlineId: "",
               album: meta.album ?? "",
               selected: false,
               year: meta.year?.year ?? 0,
@@ -99,26 +101,56 @@ class SplashLogic extends GetxController {
 
             audioFiles.add(oneSong);
           } catch (e) {
-            Get.log('Error reading metadata: $e');
+            Get.log('| try second method | Error reading metadata: $e ');
 
-            if (noSong) {
+            try {
+              final fileMetadata = await FlutterMediaMetadataNew.getMetadata(
+                entity.path,
+              );
+
               var oneSong = OneSong(
-                album: "",
-                year: 0,
-                artist: "",
+                onlineId: "",
+                album: fileMetadata.albumName ?? "",
                 selected: false,
-                title: entity.path.split('/').last,
-                trackNumber: 0,
+                year: fileMetadata.year ?? 0,
+                artist: fileMetadata.writerName ?? "",
+                title: fileMetadata.trackName ?? "",
+                trackNumber: fileMetadata.trackNumber ?? 0,
                 trackTotal: 0,
-                duration: Duration.zero,
-                genres: [],
-                discNumber: 0,
+                duration: Duration(
+                  milliseconds: fileMetadata.trackDuration ?? 0,
+                ),
+                genres: [fileMetadata.genre ?? ""],
+                discNumber: fileMetadata.discNumber ?? 0,
                 totalDisc: 0,
                 lyrics: "",
                 file: entity.path,
-                picture: "",
+                picture: base64Encode(fileMetadata.albumArt ?? []),
               );
+
               audioFiles.add(oneSong);
+            } catch (e) {
+              Get.log('Error reading metadata: $e');
+              if (noSong) {
+                var oneSong = OneSong(
+                  onlineId: "",
+                  album: "",
+                  year: 0,
+                  artist: "",
+                  selected: false,
+                  title: entity.path.split('/').last,
+                  trackNumber: 0,
+                  trackTotal: 0,
+                  duration: Duration.zero,
+                  genres: [],
+                  discNumber: 0,
+                  totalDisc: 0,
+                  lyrics: "",
+                  file: entity.path,
+                  picture: "",
+                );
+                audioFiles.add(oneSong);
+              }
             }
           }
         }

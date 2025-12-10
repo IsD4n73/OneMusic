@@ -92,7 +92,7 @@ class PlayerPage extends StatelessWidget {
                     icon: Icon(Icons.skip_next),
                     style: IconButton.styleFrom(iconSize: 50),
                   ),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.timer)),
+                  IconButton(onPressed: () {}, icon: Icon(Icons.favorite)),
                 ],
               ),
             ],

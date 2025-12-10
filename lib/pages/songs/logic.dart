@@ -72,6 +72,7 @@ class SongsLogic extends GetxController {
       var meta = readMetadata(file, getImage: true);
 
       var oneSong = OneSong(
+        onlineId: "",
         album: meta.album ?? "",
         year: meta.year?.year ?? 0,
         artist: meta.artist ?? "",

@@ -1,5 +1,6 @@
 class OneSong {
   final String album;
+  final String onlineId;
   final int year;
   final String artist;
   final String title;
@@ -15,6 +16,7 @@ class OneSong {
   final bool selected;
 
   OneSong({
+    required this.onlineId,
     required this.selected,
     required this.album,
     required this.year,
@@ -34,6 +36,7 @@ class OneSong {
   // from json
   factory OneSong.fromJson(Map<String, dynamic> json) {
     return OneSong(
+      onlineId: json['onlineId'],
       album: json['album'],
       year: json['year'],
       artist: json['artist'],
@@ -53,6 +56,7 @@ class OneSong {
 
   // to json
   Map<String, dynamic> toJson() => {
+    'onlineId': onlineId,
     'album': album,
     'year': year,
     'artist': artist,
@@ -71,6 +75,7 @@ class OneSong {
 
   OneSong copyWith({required bool selected}) {
     return OneSong(
+      onlineId: onlineId,
       album: album,
       year: year,
       artist: artist,
