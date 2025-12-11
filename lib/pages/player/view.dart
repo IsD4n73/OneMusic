@@ -2,6 +2,7 @@ import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
+import 'package:one_music/pages/playlist/logic.dart';
 import 'package:one_music/pages/widgets/one_image.dart';
 
 import '../../controller/one_player_controller.dart';
@@ -92,7 +93,24 @@ class PlayerPage extends StatelessWidget {
                     icon: Icon(Icons.skip_next),
                     style: IconButton.styleFrom(iconSize: 50),
                   ),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.favorite)),
+                  Obx(
+                    () => IconButton(
+                      onPressed: () {
+                        if (controller.playingSong.value == null) return;
+                        logic.toggleFavSong(controller.playingSong.value!);
+
+                        PlaylistLogic playlistLogic = Get.find();
+                        playlistLogic.loadPlaylists();
+                      },
+                      icon: Icon(
+                        logic.favourites.contains(
+                              controller.playingSong.value?.file,
+                            )
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ],

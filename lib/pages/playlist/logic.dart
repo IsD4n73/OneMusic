@@ -16,7 +16,7 @@ class PlaylistLogic extends GetxController {
   TextEditingController playlistNameController = TextEditingController();
   RxList<OneSong> selectedSongs = <OneSong>[].obs;
 
-  void _loadPlaylists() {
+  void loadPlaylists() {
     playlists.value = List<OnePlaylist>.from(DbController.playlistsBox.values);
   }
 
@@ -140,6 +140,6 @@ class PlaylistLogic extends GetxController {
   void onInit() {
     super.onInit();
 
-    _loadPlaylists();
+    loadPlaylists();
   }
 }

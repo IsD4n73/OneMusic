@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:audiotags/audiotags.dart';
 import 'package:disable_battery_optimization/disable_battery_optimization.dart';
-import 'package:get/get.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:one_music/common/app_toast.dart';
 import 'package:one_music/common/db_controller.dart';
 import 'package:one_music/models/one_song.dart';
@@ -12,6 +13,7 @@ import 'package:ffi/ffi.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:win32/win32.dart';
 import 'package:audio_metadata_reader/audio_metadata_reader.dart';
+import '../../models/one_playlist.dart';
 
 class SplashLogic extends GetxController {
   var audioExtensions = ['.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a'];
@@ -159,11 +161,36 @@ class SplashLogic extends GetxController {
     return audioFiles;
   }
 
+  void _createNecessaryPlaylists() {
+    var needToCreate = ["favourites_track".tr()];
+
+    List<OnePlaylist> playlists = List<OnePlaylist>.from(
+      DbController.playlistsBox.values,
+    );
+    var names = playlists.map((e) => e.name);
+
+    for (var name in needToCreate) {
+      var created = names.contains(name);
+      if (!created) {
+        DbController.playlistsBox.put(
+          name,
+          OnePlaylist(
+            id: DateTime.now().millisecondsSinceEpoch,
+            name: name,
+            picture: null,
+            songs: [],
+          ),
+        );
+      }
+    }
+  }
+
   @override
   void onInit() {
     super.onInit();
     Future.delayed(Duration.zero, () async {
       getAudioFiles();
+      _createNecessaryPlaylists();
     });
   }
 }

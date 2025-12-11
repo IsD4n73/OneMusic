@@ -154,14 +154,14 @@ class PlaylistPage extends StatelessWidget {
                                               (context, error, stackTrace) =>
                                                   Image.asset(
                                                     "assets/images/icon.png",
-                                                    width: 50,
-                                                    height: 50,
+                                                    width: 150,
+                                                    height: 150,
                                                   ),
                                         )
                                       : Image.asset(
                                           "assets/images/icon.png",
-                                          width: 50,
-                                          height: 50,
+                                          width: 150,
+                                          height: 150,
                                         ),
                                   Text(
                                     logic.playlists[index].name,
