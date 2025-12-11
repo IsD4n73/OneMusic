@@ -164,7 +164,7 @@ class PlaylistPage extends StatelessWidget {
                                           height: 150,
                                         ),
                                   Text(
-                                    logic.playlists[index].name,
+                                    logic.playlists[index].name.tr(),
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -172,7 +172,7 @@ class PlaylistPage extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    "${logic.playlists[index].songs.length} ${"track".tr()}",
+                                    "${logic.playlists[index].songs.length} ${"tracks".tr()}",
                                   ),
                                 ],
                               ),

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:one_music/common/db_controller.dart';
 import 'package:one_music/models/one_song.dart';
@@ -13,7 +12,7 @@ class PlayerLogic extends GetxController {
   void toggleFavSong(OneSong song) {
     var playlists = List<OnePlaylist>.from(DbController.playlistsBox.values);
     var playlist = playlists.firstWhere(
-      (element) => element.name == "favourites_track".tr(),
+      (element) => element.name == "favourites_track",
     );
 
     var songs = playlist.songs
@@ -46,7 +45,7 @@ class PlayerLogic extends GetxController {
     super.onInit();
     var playlists = List<OnePlaylist>.from(DbController.playlistsBox.values);
     var playlist = playlists.firstWhere(
-      (element) => element.name == "favourites_track".tr(),
+      (element) => element.name == "favourites_track",
     );
 
     favourites.value = playlist.songs

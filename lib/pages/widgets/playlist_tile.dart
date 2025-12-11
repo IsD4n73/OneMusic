@@ -32,7 +32,7 @@ class PlaylistTile extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "${playlist.songs.length} ${"track".tr()}",
+                      "${playlist.songs.length} ${"tracks".tr()}",
                       style: TextStyle(fontSize: 13),
                     ),
                   ],

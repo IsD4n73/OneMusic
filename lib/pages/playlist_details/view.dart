@@ -29,18 +29,18 @@ class PlaylistDetailsPage extends StatelessWidget {
       body: Column(
         children: [
           OneAppBar(
-            textOne: "${playlist.name} |",
-            textTwo: "(${playlist.songs.length}) ${"track".tr()}",
+            textOne: "${playlist.name.tr()} |",
+            textTwo: "(${playlist.songs.length}) ${"tracks".tr()}",
           ),
 
           SizedBox(height: 20),
           OneImage(picture: playlist.picture, size: OneImageSize.medium),
           SizedBox(height: 20),
           Text(
-            playlist.name,
+            playlist.name.tr(),
             style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
-          Text("${playlist.songs.length} ${"track".tr()}"),
+          Text("${playlist.songs.length} ${"tracks".tr()}"),
           Divider(),
           Expanded(
             child: Stack(

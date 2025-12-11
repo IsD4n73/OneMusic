@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:audiotags/audiotags.dart';
 import 'package:disable_battery_optimization/disable_battery_optimization.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:one_music/common/app_toast.dart';
 import 'package:one_music/common/db_controller.dart';
@@ -162,7 +161,7 @@ class SplashLogic extends GetxController {
   }
 
   void _createNecessaryPlaylists() {
-    var needToCreate = ["favourites_track".tr()];
+    var needToCreate = ["favourites_track"];
 
     List<OnePlaylist> playlists = List<OnePlaylist>.from(
       DbController.playlistsBox.values,
